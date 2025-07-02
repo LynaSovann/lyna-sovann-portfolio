@@ -64,7 +64,9 @@ export function Skills() {
             My <span className="text-primary">Skills</span>
           </h2>
 
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
+          <div className="mb-12">I'll update soon...</div>
+
+          {/* <div className="grid md:grid-cols-3 gap-8 mb-12">
             {skillCategories.map((category, index) => (
               <motion.div
                 key={category.title}
@@ -91,9 +93,9 @@ export function Skills() {
                 </Card>
               </motion.div>
             ))}
-          </div>
+          </div> */}
 
-          <div className="text-center">
+          {/* <div className="text-center">
             <h3 className="text-xl font-semibold mb-6">Technologies I Work With</h3>
             <div className="flex flex-wrap justify-center gap-3">
               {technologies.map((tech) => (
@@ -102,7 +104,7 @@ export function Skills() {
                 </Badge>
               ))}
             </div>
-          </div>
+          </div> */}
         </motion.div>
       </div>
     </section>

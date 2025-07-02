@@ -72,14 +72,14 @@ export function Footer() {
                   Experiences
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link
                   href="/contact"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
                   Contact
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
 

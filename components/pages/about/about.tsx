@@ -18,14 +18,16 @@ import {
   MapPin,
 } from "lucide-react";
 import { personalInfo } from "@/data/social-data";
+import LayoutPage from "@/components/layout/page-layout";
 
 export function About() {
   const interests = [
     "Web Development",
     "UI/UX Design",
-    "Machine Learning",
-    "Open Source",
-    "Photography",
+    "DevOps Engineering",
+    // "Machine Learning",
+    // "Open Source",
+    // "Photography",
   ];
 
   const skills = [
@@ -66,15 +68,15 @@ export function About() {
   ];
 
   const hobbies = [
+    // {
+    //   name: "Photography",
+    //   icon: Camera,
+    //   description: "Capturing moments and landscapes",
+    // },
     {
-      name: "Photography",
-      icon: Camera,
-      description: "Capturing moments and landscapes",
-    },
-    {
-      name: "Music Production",
+      name: "Listening to music",
       icon: Music,
-      description: "Creating electronic music in my spare time",
+      description: "Listening to music from various genres",
     },
     {
       name: "Travel",
@@ -84,17 +86,17 @@ export function About() {
     {
       name: "Reading",
       icon: BookOpen,
-      description: "Tech blogs, sci-fi novels, and philosophy",
+      description: "Reading in the freetime",
     },
+    // {
+    //   name: "Coffee",
+    //   icon: Coffee,
+    //   description: "Third-wave coffee enthusiast and home barista",
+    // },
     {
-      name: "Coffee",
-      icon: Coffee,
-      description: "Third-wave coffee enthusiast and home barista",
-    },
-    {
-      name: "Gaming",
+      name: "Running",
       icon: Gamepad2,
-      description: "Strategy games and indie titles",
+      description: "Enjoying outdoor runs, even if I’m not exactly a runner.",
     },
   ];
 
@@ -128,18 +130,11 @@ export function About() {
   ];
 
   return (
-    <section id="about" className="py-20 bg-muted/50">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-        >
-          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-16">
-            About <span className="text-primary">Me</span>
-          </h2>
-
+    <LayoutPage
+      blackTitle="About"
+      redTitle="Me"
+      content={
+        <main>
           {/* Hero Section with Photos */}
           <div className="grid lg:grid-cols-3 gap-8 mb-16">
             <div className="lg:col-span-2">
@@ -150,7 +145,9 @@ export function About() {
                       <Code2 className="w-8 h-8 text-primary" />
                     </div>
                     <div>
-                      <h3 className="text-2xl font-bold">{personalInfo.name}</h3>
+                      <h3 className="text-2xl font-bold">
+                        {personalInfo.name}
+                      </h3>
                       <p className="text-muted-foreground flex items-center gap-2">
                         <MapPin className="w-4 h-4" />
                         {personalInfo.location}
@@ -159,13 +156,22 @@ export function About() {
                   </div>
 
                   <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-                    I'm a passionate full-stack developer with over 5 years of
-                    experience creating digital solutions that make a
-                    difference. I specialize in building scalable web
-                    applications using modern technologies like React, Node.js,
-                    and cloud platforms.
+                    I'm a Fullstack Developer with strong experience in Spring
+                    Boot and Next.js, and a solid background in DevOps
+                    practices. I'm passionate about building scalable
+                    applications and streamlining development workflows.
+                    Currently, I'm expanding my skill set into Machine Learning
+                    to bridge the gap between software engineering and
+                    intelligent systems. 
+                    Beyond tech, 
+                    {/* I’m an active member of
+                    various communities, often volunteering to support and
+                    contribute to impactful causes. */}
+                     I also enjoy staying
+                    physically active through running, walking, and other
+                    outdoor activities—believing that a healthy body fuels a
+                    sharp mind.
                   </p>
-
 
                   <div className="space-y-4">
                     <div>
@@ -187,7 +193,12 @@ export function About() {
             <div className="relative h-80 w-full">
               {/* Main large image - center */}
               <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-32 h-32 rounded-full overflow-hidden border-4 border-background shadow-lg z-10">
-                <Image src="/user.jpg" alt="John - Main Profile" fill className="object-cover" />
+                <Image
+                  src="/user.jpg"
+                  alt="John - Main Profile"
+                  fill
+                  className="object-cover"
+                />
               </div>
 
               {/* Diamond positioned images */}
@@ -201,19 +212,39 @@ export function About() {
               </div>
 
               <div className="absolute top-16 right-8 w-20 h-28 rounded-2xl overflow-hidden shadow-lg">
-                <Image src="/user.jpg" alt="John at conference" fill className="object-cover" />
+                <Image
+                  src="/user.jpg"
+                  alt="John at conference"
+                  fill
+                  className="object-cover"
+                />
               </div>
 
               <div className="absolute bottom-16 left-12 w-28 h-20 rounded-full overflow-hidden shadow-lg">
-                <Image src="/user.jpg" alt="John with team" fill className="object-cover" />
+                <Image
+                  src="/user.jpg"
+                  alt="John with team"
+                  fill
+                  className="object-cover"
+                />
               </div>
 
               <div className="absolute bottom-12 right-16 w-24 h-24 transform rotate-12 rounded-lg overflow-hidden shadow-lg">
-                <Image src="/user.jpg" alt="John presenting" fill className="object-cover transform -rotate-12" />
+                <Image
+                  src="/user.jpg"
+                  alt="John presenting"
+                  fill
+                  className="object-cover transform -rotate-12"
+                />
               </div>
 
               <div className="absolute top-32 left-1/2 transform -translate-x-1/2 translate-x-20 w-16 h-16 rounded-full overflow-hidden border-2 border-primary shadow-lg">
-                <Image src="/user.jpg" alt="John casual" fill className="object-cover" />
+                <Image
+                  src="/user.jpg"
+                  alt="John casual"
+                  fill
+                  className="object-cover"
+                />
               </div>
 
               {/* Decorative elements */}
@@ -224,7 +255,7 @@ export function About() {
           </div>
 
           {/* Stats Cards */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
+          {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
             <Card>
               <CardContent className="p-6 text-center">
                 <div className="text-3xl font-bold text-primary mb-2">50+</div>
@@ -249,10 +280,10 @@ export function About() {
                 <div className="text-muted-foreground">Support</div>
               </CardContent>
             </Card>
-          </div>
+          </div> */}
 
           {/* Skills Section */}
-          <div className="mb-16">
+          {/* <div className="mb-16">
             <h3 className="text-2xl font-bold text-center mb-8">
               Technical Skills
             </h3>
@@ -290,11 +321,11 @@ export function About() {
                 </motion.div>
               ))}
             </div>
-          </div>
+          </div> */}
 
           {/* Languages & Hobbies */}
-          <div className="grid lg:grid-cols-2 gap-8 mb-16">
-            {/* Languages */}
+          {/* <div className="grid lg:grid-cols-2 gap-8 mb-16">
+           
             <Card>
               <CardHeader>
                 <CardTitle>Languages</CardTitle>
@@ -320,7 +351,7 @@ export function About() {
               </CardContent>
             </Card>
 
-            {/* Achievements */}
+            
             <Card>
               <CardHeader>
                 <CardTitle>Achievements</CardTitle>
@@ -344,7 +375,7 @@ export function About() {
                 ))}
               </CardContent>
             </Card>
-          </div>
+          </div> */}
 
           {/* Hobbies */}
           <div className="mb-16">
@@ -377,7 +408,7 @@ export function About() {
           </div>
 
           {/* Career Timeline */}
-          <div>
+          {/* <div>
             <h3 className="text-2xl font-bold text-center mb-8">My Journey</h3>
             <div className="max-w-3xl mx-auto">
               <div className="space-y-8">
@@ -408,9 +439,9 @@ export function About() {
                 ))}
               </div>
             </div>
-          </div>
-        </motion.div>
-      </div>
-    </section>
+          </div> */}
+        </main>
+      }
+    />
   );
 }
