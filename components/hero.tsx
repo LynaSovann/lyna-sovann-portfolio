@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { ArrowDown, Github, Linkedin, Mail } from "lucide-react"
+import { ArrowDown, Github, Linkedin, Mail, PhoneCall } from "lucide-react"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
@@ -55,6 +55,11 @@ export function Hero() {
             <Button variant="ghost" size="icon" className="hover:text-primary" asChild>
               <Link href="mailto:sovannlyna2004@gmail.com" aria-label="Email">
                 <Mail className="h-6 w-6" />
+              </Link>
+            </Button>
+            <Button variant="ghost" size="icon" className="hover:text-primary" asChild>
+              <Link href="https://t.me/lyna_sovann" target="_blank" rel="noopener noreferrer" aria-label="Telegram Profile">
+                <PhoneCall className="h-6 w-6" />
               </Link>
             </Button>
           </div>
