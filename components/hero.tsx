@@ -3,17 +3,34 @@
 import { Button } from "@/components/ui/button"
 import { ArrowDown, Github, Linkedin, Mail } from "lucide-react"
 import { motion } from "framer-motion"
+import Image from "next/image"
 
 export function Hero() {
   return (
     <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.5 }} 
+            animate={{ opacity: 1, scale: 1 }} 
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="mb-8"
+          >
+            <div className="relative w-32 h-32 sm:w-40 sm:h-40 mx-auto mb-6">
+              <Image
+                src="/user.jpg"
+                alt="Lyna Sovann"
+                fill
+                className="rounded-full object-cover border-4 border-primary/20 shadow-lg"
+                priority
+              />
+            </div>
+          </motion.div>
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold mb-6">
-            Hi, I'm <span className="text-primary">John Doe</span>
+            Hi, I'm <span className="text-primary">Lyna Sovann</span>
           </h1>
           <p className="text-xl sm:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-            Full Stack Developer passionate about creating beautiful, functional, and user-centered digital experiences.
+            Fullstack Developer & DevOps Engineer passionate about creating scalable, efficient, and user-centered digital experiences.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
             <Button size="lg" className="bg-primary hover:bg-primary/90">

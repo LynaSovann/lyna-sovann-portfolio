@@ -11,9 +11,9 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  title: "John Doe - Portfolio",
+  title: "Lyna Sovann - Fullstack Developer & DevOps Engineer",
   description:
-    "Full Stack Developer passionate about creating beautiful, functional, and user-centered digital experiences.",
+    "Fullstack Developer & DevOps Engineer passionate about creating scalable, efficient, and user-centered digital experiences.",
     generator: 'v0.dev'
 }
 
