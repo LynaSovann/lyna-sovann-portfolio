@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { ArrowDown, Github, Linkedin, Mail } from "lucide-react"
 import { motion } from "framer-motion"
 import Image from "next/image"
+import Link from "next/link"
 
 export function Hero() {
   return (
@@ -34,21 +35,27 @@ export function Hero() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
             <Button size="lg" className="bg-primary hover:bg-primary/90">
-              <a href="#projects">View My Work</a>
+              <Link href="#projects">View My Work</Link>
             </Button>
             <Button variant="outline" size="lg">
-              <a href="#contact">Get In Touch</a>
+              <Link href="#contact">Get In Touch</Link>
             </Button>
           </div>
           <div className="flex justify-center space-x-6">
-            <Button variant="ghost" size="icon" className="hover:text-primary">
-              <Github className="h-6 w-6" />
+            <Button variant="ghost" size="icon" className="hover:text-primary" asChild>
+              <Link href="https://github.com/LynaSovann" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
+                <Github className="h-6 w-6" />
+              </Link>
             </Button>
-            <Button variant="ghost" size="icon" className="hover:text-primary">
-              <Linkedin className="h-6 w-6" />
+            <Button variant="ghost" size="icon" className="hover:text-primary" asChild>
+              <Link href="https://www.linkedin.com/in/lyna-sovann-829448264/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
+                <Linkedin className="h-6 w-6" />
+              </Link>
             </Button>
-            <Button variant="ghost" size="icon" className="hover:text-primary">
-              <Mail className="h-6 w-6" />
+            <Button variant="ghost" size="icon" className="hover:text-primary" asChild>
+              <Link href="mailto:sovannlyna2004@gmail.com" aria-label="Email">
+                <Mail className="h-6 w-6" />
+              </Link>
             </Button>
           </div>
         </motion.div>
