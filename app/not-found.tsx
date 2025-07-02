@@ -1,17 +1,31 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent } from "@/components/ui/card";
 import { motion, useAnimation } from "framer-motion";
-import { Home, Search, ArrowLeft, Sparkles, Zap, Star } from "lucide-react";
+import { Home, ArrowLeft, Sparkles, Zap, Star } from "lucide-react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function NotFound() {
   const controls = useAnimation();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [windowSize, setWindowSize] = useState({ width: 1000, height: 800 });
+  const router = useRouter();
 
+  // Update window size on client-side only
+  useEffect(() => {
+    const updateWindowSize = () => {
+      setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+    };
+
+    updateWindowSize(); // Set initial size
+    window.addEventListener("resize", updateWindowSize);
+
+    return () => window.removeEventListener("resize", updateWindowSize);
+  }, []);
+
+  // Animation for rotating shapes
   useEffect(() => {
     controls.start({
       rotate: [0, 360],
@@ -23,6 +37,7 @@ export default function NotFound() {
     });
   }, [controls]);
 
+  // Mouse movement tracking
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
@@ -31,27 +46,15 @@ export default function NotFound() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
+  // Generate floating shapes
   const floatingShapes = Array.from({ length: 8 }, (_, i) => ({
     id: i,
     size: Math.random() * 60 + 20,
-    initialX: Math.random() * window?.innerWidth || 1000,
-    initialY: Math.random() * window?.innerHeight || 800,
+    initialX: Math.random() * windowSize.width,
+    initialY: Math.random() * windowSize.height,
     duration: Math.random() * 10 + 10,
     delay: Math.random() * 5,
   }));
-
-  const sparkleVariants = {
-    animate: {
-      scale: [1, 1.2, 1],
-      rotate: [0, 180, 360],
-      opacity: [0.7, 1, 0.7],
-      transition: {
-        duration: 2,
-        repeat: Number.POSITIVE_INFINITY,
-        ease: "easeInOut",
-      },
-    },
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 overflow-hidden relative">
@@ -194,11 +197,7 @@ export default function NotFound() {
             </motion.div>
 
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button
-                variant="outline"
-                size="lg"
-                onClick={() => window.history.back()}
-              >
+              <Button variant="outline" size="lg" onClick={() => router.back()}>
                 <ArrowLeft className="w-5 h-5 mr-2" />
                 Go Back
               </Button>
@@ -211,11 +210,7 @@ export default function NotFound() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 1.2 }}
             className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto"
-          >
-            
-          </motion.div>
-
-          
+          ></motion.div>
         </div>
       </div>
 
@@ -245,29 +240,29 @@ export default function NotFound() {
       {/* Floating Particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {Array.from({ length: 20 }).map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-primary rounded-full"
-            initial={{
-              x:
-                Math.random() *
-                (typeof window !== "undefined" ? window.innerWidth : 1000),
-              y: typeof window !== "undefined" ? window.innerHeight : 800,
-              opacity: 0,
-            }}
-            animate={{
-              y: -100,
-              opacity: [0, 1, 0],
-            }}
-            transition={{
-              duration: Math.random() * 3 + 2,
-              repeat: Number.POSITIVE_INFINITY,
-              delay: Math.random() * 5,
-              ease: "easeOut",
-            }}
-          />
-        ))}
+              <motion.div
+                key={i}
+                className="absolute w-1 h-1 bg-primary rounded-full"
+                initial={{
+                  x: Math.random() * windowSize.width,
+                  y: windowSize.height,
+                  opacity: 0,
+                }}
+                animate={{
+                  y: -100,
+                  opacity: [0, 1, 0],
+                }}
+                transition={{
+                  duration: Math.random() * 3 + 2,
+                  repeat: Number.POSITIVE_INFINITY,
+                  delay: Math.random() * 5,
+                  ease: "easeOut",
+                }}
+              />
+            ))}
       </div>
+
+
     </div>
   );
 }
