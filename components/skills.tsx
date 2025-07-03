@@ -16,7 +16,7 @@ export function Skills() {
       redTitle="Skills"
       content={
         <main className="space-y-16">
-          {/* <style jsx>{`
+          <style jsx>{`
             .custom-scrollbar {
               scrollbar-width: thin;
               scrollbar-color: #e63946 transparent;
@@ -45,7 +45,7 @@ export function Skills() {
             .custom-scrollbar::-webkit-scrollbar-corner {
               background: transparent;
             }
-          `}</style> */}
+          `}</style>
 
           {/* Main Skill Categories */}
           <div className="grid md:grid-cols-3 gap-8">
