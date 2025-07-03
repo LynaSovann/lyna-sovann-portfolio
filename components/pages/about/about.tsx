@@ -32,35 +32,6 @@ export function About() {
     // "Photography",
   ];
 
-  const skills = [
-    {
-      category: "Frontend",
-      items: [
-        { name: "React/Next.js", level: 95 },
-        { name: "TypeScript", level: 90 },
-        { name: "Tailwind CSS", level: 85 },
-        { name: "Vue.js", level: 80 },
-      ],
-    },
-    {
-      category: "Backend",
-      items: [
-        { name: "Node.js", level: 90 },
-        { name: "Python", level: 85 },
-        { name: "PostgreSQL", level: 80 },
-        { name: "MongoDB", level: 75 },
-      ],
-    },
-    {
-      category: "Tools & Cloud",
-      items: [
-        { name: "Git/GitHub", level: 95 },
-        { name: "Docker", level: 80 },
-        { name: "AWS", level: 75 },
-        { name: "Figma", level: 85 },
-      ],
-    },
-  ];
 
   const languages = [
     { name: "English", level: 100, flag: "🇺🇸" },
@@ -108,28 +79,6 @@ export function About() {
     { title: "Open Source Contributor", year: "2020-Present", icon: Code2 },
   ];
 
-  const timeline = [
-    {
-      year: "2019",
-      title: "Started as Junior Developer",
-      description: "Began my journey at a startup",
-    },
-    {
-      year: "2021",
-      title: "Full Stack Developer",
-      description: "Promoted to lead frontend initiatives",
-    },
-    {
-      year: "2022",
-      title: "Senior Developer",
-      description: "Leading a team of 5 developers",
-    },
-    {
-      year: "2024",
-      title: "Freelance & Consulting",
-      description: "Started my own consulting practice",
-    },
-  ];
 
   return (
     <LayoutPage
@@ -254,74 +203,6 @@ export function About() {
             </div>
           </div>
 
-          {/* Stats Cards */}
-          {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
-            <Card>
-              <CardContent className="p-6 text-center">
-                <div className="text-3xl font-bold text-primary mb-2">50+</div>
-                <div className="text-muted-foreground">Projects Completed</div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-6 text-center">
-                <div className="text-3xl font-bold text-primary mb-2">5+</div>
-                <div className="text-muted-foreground">Years Experience</div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-6 text-center">
-                <div className="text-3xl font-bold text-primary mb-2">30+</div>
-                <div className="text-muted-foreground">Happy Clients</div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-6 text-center">
-                <div className="text-3xl font-bold text-primary mb-2">24/7</div>
-                <div className="text-muted-foreground">Support</div>
-              </CardContent>
-            </Card>
-          </div> */}
-
-          {/* Skills Section */}
-          {/* <div className="mb-16">
-            <h3 className="text-2xl font-bold text-center mb-8">
-              Technical Skills
-            </h3>
-            <div className="grid md:grid-cols-3 gap-8">
-              {skills.map((skillCategory, index) => (
-                <motion.div
-                  key={skillCategory.category}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: index * 0.2 }}
-                  viewport={{ once: true }}
-                >
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="text-center">
-                        {skillCategory.category}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      {skillCategory.items.map((skill) => (
-                        <div key={skill.name}>
-                          <div className="flex justify-between mb-2">
-                            <span className="text-sm font-medium">
-                              {skill.name}
-                            </span>
-                            <span className="text-sm text-muted-foreground">
-                              {skill.level}%
-                            </span>
-                          </div>
-                          <Progress value={skill.level} className="h-2" />
-                        </div>
-                      ))}
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </div>
-          </div> */}
 
           {/* Languages & Hobbies */}
           {/* <div className="grid lg:grid-cols-2 gap-8 mb-16">
@@ -397,39 +278,7 @@ export function About() {
             </div>
           </div>
 
-          {/* Career Timeline */}
-          {/* <div>
-            <h3 className="text-2xl font-bold text-center mb-8">My Journey</h3>
-            <div className="max-w-3xl mx-auto">
-              <div className="space-y-8">
-                {timeline.map((item, index) => (
-                  <motion.div
-                    key={item.year}
-                    initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.8, delay: index * 0.2 }}
-                    viewport={{ once: true }}
-                    className="flex items-center gap-6"
-                  >
-                    <div className="flex-shrink-0 w-20 text-right">
-                      <div className="text-lg font-bold text-primary">
-                        {item.year}
-                      </div>
-                    </div>
-                    <div className="flex-shrink-0 w-4 h-4 bg-primary rounded-full"></div>
-                    <Card className="flex-1">
-                      <CardContent className="p-4">
-                        <h4 className="font-semibold mb-1">{item.title}</h4>
-                        <p className="text-sm text-muted-foreground">
-                          {item.description}
-                        </p>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </div> */}
+
         </main>
       }
     />

@@ -43,7 +43,13 @@ export default function EmailForm() {
 
     try {
       // Validate form data
-      if (!formData.firstName || !formData.lastName || !formData.email || !formData.subject || !formData.message) {
+      if (
+        !formData.firstName ||
+        !formData.lastName ||
+        !formData.email ||
+        !formData.subject ||
+        !formData.message
+      ) {
         toast({
           title: "Error",
           description: "Please fill in all fields.",
@@ -82,25 +88,26 @@ ${formData.message}
 <p><strong>Email:</strong> ${formData.email}</p>
 <p><strong>Subject:</strong> ${formData.subject}</p>
 <p><strong>Message:</strong></p>
-<p>${formData.message.replace(/\n/g, '<br>')}</p>
+<p>${formData.message.replace(/\n/g, "<br>")}</p>
         `,
       };
 
       // Send email using your preferred method
       // Option 1: Using a service like EmailJS, SendGrid, or similar
       // Option 2: Using a serverless function (recommended for production)
-      
+
       // For now, we'll simulate the email sending
       // In production, you should integrate with a real email service
       console.log("Email content:", emailContent);
-      
+
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
       // Success message
       toast({
         title: "Success!",
-        description: "Your message has been sent successfully. I'll get back to you soon!",
+        description:
+          "Your message has been sent successfully. I'll get back to you soon!",
       });
 
       // Reset form
@@ -111,7 +118,6 @@ ${formData.message}
         subject: "",
         message: "",
       });
-
     } catch (error) {
       console.error("Error sending email:", error);
       toast({
@@ -134,7 +140,7 @@ ${formData.message}
             name="firstName"
             value={formData.firstName}
             onChange={handleInputChange}
-            placeholder="John"
+            placeholder="Enter your first name"
             required
             disabled={isSubmitting}
           />
@@ -146,7 +152,7 @@ ${formData.message}
             name="lastName"
             value={formData.lastName}
             onChange={handleInputChange}
-            placeholder="Doe"
+            placeholder="Enter your last name"
             required
             disabled={isSubmitting}
           />
@@ -160,7 +166,7 @@ ${formData.message}
           type="email"
           value={formData.email}
           onChange={handleInputChange}
-          placeholder="john@example.com"
+          placeholder="Enter your email"
           required
           disabled={isSubmitting}
         />
@@ -172,7 +178,7 @@ ${formData.message}
           name="subject"
           value={formData.subject}
           onChange={handleInputChange}
-          placeholder="Project Inquiry"
+          placeholder="Enter the subject of your message"
           required
           disabled={isSubmitting}
         />
@@ -184,15 +190,15 @@ ${formData.message}
           name="message"
           value={formData.message}
           onChange={handleInputChange}
-          placeholder="Tell me about your project..."
+          placeholder="Tell me anything..."
           className="min-h-[120px]"
           required
           disabled={isSubmitting}
         />
       </div>
-      <Button 
-        type="submit" 
-        className="w-full bg-primary hover:bg-primary/90" 
+      <Button
+        type="submit"
+        className="w-full bg-primary hover:bg-primary/90"
         disabled={isSubmitting}
       >
         {isSubmitting ? (

@@ -8,7 +8,6 @@ import { Layers, FileCode, Cpu, Shield, Zap, Smartphone } from "lucide-react";
 import { skillCategories } from "@/data/skill-category";
 
 export function Skills() {
-
   return (
     <LayoutPage
       id="skills"
@@ -61,9 +60,17 @@ export function Skills() {
                 <Card className="h-full hover:shadow-xl transition-all duration-300 border-0 bg-gradient-to-br from-background to-muted/20">
                   <CardHeader className="text-center pb-4">
                     <div
-                      className={`w-16 h-16 mx-auto rounded-2xl ${category.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}
+                      className={`w-16 h-16 mx-auto rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 ${
+                        category.title === "Frontend"
+                          ? `bg-blue-500/10 text-blue-600 dark:text-blue-400`
+                          : category.title === "Backend"
+                          ? `bg-green-500/10 text-green-600 dark:text-green-400`
+                          : category.title === "DevOps"
+                          ? `bg-yellow-500/10 text-yellow-600 dark:text-yellow-400`
+                          : `bg-gray-500/10 text-gray-600 dark:text-gray-400`
+                      }`}
                     >
-                      <category.icon className="w-8 h-8" />
+                      <category.icon className="w-8 h-8 " />
                     </div>
                     <CardTitle className="text-xl font-bold">
                       {category.title}
@@ -90,7 +97,7 @@ export function Skills() {
                           className="group/skill"
                         >
                           <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors duration-200">
-                            <div className="text-2xl group-hover/skill:scale-125 transition-transform duration-200">
+                            <div className="text-2xl group-hover/skill:scale-125 transition-transform duration-200 ">
                               {skill.icon}
                             </div>
                             <div className="flex-1">

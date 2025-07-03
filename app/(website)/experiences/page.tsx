@@ -1,4 +1,5 @@
 import LayoutPage from "@/components/layout/page-layout";
+import ExperiencePageComponent from "@/components/pages/experiences/experiences";
 
 export default function ExperiencesPage() {
   return (
@@ -6,7 +7,10 @@ export default function ExperiencesPage() {
       id="experiences"
       blackTitle="My"
       redTitle="Experiences"
-      content={<main>Update soon...</main>}
+      content={
+        <>Update soon...</>
+        // <ExperiencePageComponent/>
+      }
     />
   );
 }

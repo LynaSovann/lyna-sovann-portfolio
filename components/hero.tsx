@@ -59,14 +59,14 @@ export function Hero() {
           <p className="text-xl sm:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto">
             {personalInfo.description}
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+          {/* <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
             <Button size="lg" className="bg-primary hover:bg-primary/90">
               <Link href="#projects">View My Work</Link>
             </Button>
             <Button variant="outline" size="lg">
               <Link href="#contact">Get In Touch</Link>
             </Button>
-          </div>
+          </div> */}
           <div className="flex justify-center space-x-6">
             {socialLinks.map((social) => (
               <Button
