@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/mode-toggle";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Download } from "lucide-react";
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,6 +23,12 @@ export function Navigation() {
     { href: "/experiences", label: "Experiences" },
     // { href: "#contact", label: "Contact" },
   ];
+
+  const handleDownloadCV = () => {
+    // Add your CV download logic here
+    // For example: window.open('/path-to-your-cv.pdf', '_blank');
+    console.log("Download CV clicked");
+  };
 
   return (
     <nav
@@ -48,6 +54,15 @@ export function Navigation() {
               </a>
             ))}
             <ModeToggle />
+
+            <Button
+              className="bg-primary hover:bg-primary/90"
+              size="sm"
+              onClick={handleDownloadCV}
+            >
+              <Download className="h-4 w-4" />
+              <span>CV</span>
+            </Button>
           </div>
 
           {/* Mobile Navigation */}
@@ -81,6 +96,14 @@ export function Navigation() {
                   {item.label}
                 </a>
               ))}
+              <Button
+                className="bg-primary hover:bg-primary/90"
+                size="sm"
+                onClick={handleDownloadCV}
+              >
+                <Download className="h-4 w-4" />
+                <span>CV</span>
+              </Button>
             </div>
           </div>
         )}

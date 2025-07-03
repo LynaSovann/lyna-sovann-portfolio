@@ -27,12 +27,10 @@ export function Contact() {
           <div className="grid md:grid-cols-2 gap-12">
             <div>
               <h3 className="text-2xl font-semibold mb-6">
-                Let's work together
+                Let's get to know each other!
               </h3>
               <p className="text-muted-foreground mb-8 text-lg">
-                I'm always interested in new opportunities and exciting
-                projects. Whether you have a question or just want to say hi,
-                feel free to reach out!
+                I'm a little introverted but friendly :D Feel free to reach out, whether you have a question or just want to say hi, I'd love to hear from you! 😀
               </p>
               <div className="space-y-6">
                 <div className="flex items-center space-x-4">
