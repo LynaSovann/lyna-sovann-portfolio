@@ -3,16 +3,18 @@
 import { motion } from "framer-motion";
 
 export default function LayoutPage({
+  id,
   content,
   blackTitle,
   redTitle,
 }: {
+  id: string;
   content: React.ReactNode;
   blackTitle: string;
   redTitle: string;
 }) {
   return (
-    <section id="about" className="py-20 bg-muted/50">
+    <section id={id} className="py-20 bg-muted/50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

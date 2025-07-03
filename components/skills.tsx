@@ -1,9 +1,10 @@
-"use client"
+"use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress"
-import { Badge } from "@/components/ui/badge"
-import { motion } from "framer-motion"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import { Badge } from "@/components/ui/badge";
+import { motion } from "framer-motion";
+import LayoutPage from "./layout/page-layout";
 
 export function Skills() {
   const skillCategories = [
@@ -11,18 +12,20 @@ export function Skills() {
       title: "Frontend",
       skills: [
         { name: "React/Next.js", level: 95 },
-        { name: "TypeScript", level: 90 },
+        { name: "TypeScript/JavaScript", level: 90 },
         { name: "Tailwind CSS", level: 85 },
-        { name: "Vue.js", level: 80 },
       ],
     },
     {
       title: "Backend",
       skills: [
-        { name: "Node.js", level: 90 },
-        { name: "Python", level: 85 },
+        // { name: "Node.js", level: 90 },
+        // { name: "Python", level: 85 },
+        { name: "Spring Boot", level: 80 },
+        { name: "Java", level: 80 },
+
         { name: "PostgreSQL", level: 80 },
-        { name: "MongoDB", level: 75 },
+        // { name: "MongoDB", level: 75 },
       ],
     },
     {
@@ -34,7 +37,7 @@ export function Skills() {
         { name: "Figma", level: 85 },
       ],
     },
-  ]
+  ];
 
   const technologies = [
     "React",
@@ -49,24 +52,18 @@ export function Skills() {
     "AWS",
     "Git",
     "Figma",
-  ]
+  ];
 
   return (
-    <section id="skills" className="py-20">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-        >
-          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12">
-            My <span className="text-primary">Skills</span>
-          </h2>
+    <LayoutPage
+      id="skills"
+      blackTitle="My"
+      redTitle="Skills"
+      content={
+        <main>
+          {/* <div className="mb-12">I'll update soon...</div> */}
 
-          <div className="mb-12">I'll update soon...</div>
-
-          {/* <div className="grid md:grid-cols-3 gap-8 mb-12">
+          <div className="grid md:grid-cols-3 gap-8 mb-12">
             {skillCategories.map((category, index) => (
               <motion.div
                 key={category.title}
@@ -77,23 +74,27 @@ export function Skills() {
               >
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-center">{category.title}</CardTitle>
+                    <CardTitle className="text-center">
+                      {category.title}
+                    </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     {category.skills.map((skill) => (
                       <div key={skill.name}>
                         <div className="flex justify-between mb-2">
-                          <span className="text-sm font-medium">{skill.name}</span>
-                          <span className="text-sm text-muted-foreground">{skill.level}%</span>
+                          <span className="text-sm font-medium">
+                            {skill.name}
+                          </span>
+                          {/* <span className="text-sm text-muted-foreground">{skill.level}%</span> */}
                         </div>
-                        <Progress value={skill.level} className="h-2" />
+                        {/* <Progress value={skill.level} className="h-2" /> */}
                       </div>
                     ))}
                   </CardContent>
                 </Card>
               </motion.div>
             ))}
-          </div> */}
+          </div>
 
           {/* <div className="text-center">
             <h3 className="text-xl font-semibold mb-6">Technologies I Work With</h3>
@@ -105,8 +106,8 @@ export function Skills() {
               ))}
             </div>
           </div> */}
-        </motion.div>
-      </div>
-    </section>
-  )
+        </main>
+      }
+    />
+  );
 }

@@ -16,9 +16,11 @@ import {
   Award,
   GraduationCap,
   MapPin,
+  Watch,
 } from "lucide-react";
 import { personalInfo } from "@/data/social-data";
 import LayoutPage from "@/components/layout/page-layout";
+import HobbyCard from "@/components/card/hobby-card";
 
 export function About() {
   const interests = [
@@ -78,11 +80,11 @@ export function About() {
       icon: Music,
       description: "Listening to music from various genres",
     },
-    {
-      name: "Travel",
-      icon: Plane,
-      description: "Exploring new cultures and places",
-    },
+    // {
+    //   name: "Travel",
+    //   icon: Plane,
+    //   description: "Exploring new cultures and places",
+    // },
     {
       name: "Reading",
       icon: BookOpen,
@@ -95,7 +97,7 @@ export function About() {
     // },
     {
       name: "Running",
-      icon: Gamepad2,
+      icon: Watch,
       description: "Enjoying outdoor runs, even if I’m not exactly a runner.",
     },
   ];
@@ -131,6 +133,7 @@ export function About() {
 
   return (
     <LayoutPage
+      id="about"
       blackTitle="About"
       redTitle="Me"
       content={
@@ -162,18 +165,15 @@ export function About() {
                     applications and streamlining development workflows.
                     Currently, I'm expanding my skill set into Machine Learning
                     to bridge the gap between software engineering and
-                    intelligent systems. 
-                    Beyond tech, 
+                    intelligent systems. Beyond tech,
                     {/* I’m an active member of
                     various communities, often volunteering to support and
                     contribute to impactful causes. */}
-                     I also enjoy staying
-                    physically active through running, walking, and other
-                    outdoor activities—believing that a healthy body fuels a
-                    sharp mind.
+                    I also enjoy staying physically active through running,
+                    walking, and other outdoor activities.
                   </p>
 
-                  <div className="space-y-4">
+                  {/* <div className="space-y-4">
                     <div>
                       <h4 className="font-semibold mb-3">Core Interests</h4>
                       <div className="flex flex-wrap gap-2">
@@ -184,7 +184,7 @@ export function About() {
                         ))}
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                 </CardContent>
               </Card>
             </div>
@@ -391,17 +391,7 @@ export function About() {
                   transition={{ duration: 0.8, delay: index * 0.1 }}
                   viewport={{ once: true }}
                 >
-                  <Card className="hover:shadow-lg transition-shadow duration-300">
-                    <CardContent className="p-6 text-center">
-                      <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <hobby.icon className="w-6 h-6 text-primary" />
-                      </div>
-                      <h4 className="font-semibold mb-2">{hobby.name}</h4>
-                      <p className="text-sm text-muted-foreground">
-                        {hobby.description}
-                      </p>
-                    </CardContent>
-                  </Card>
+                  <HobbyCard hobby={hobby} />
                 </motion.div>
               ))}
             </div>

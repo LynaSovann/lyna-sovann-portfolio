@@ -46,8 +46,8 @@ export const contactInfo: ContactInfo = {
 
 export const personalInfo = {
   name: "Lyna Sovann",
-  title: "DevOps Engineer & Fullstack Developer.",
-  description: "A passionate developer from Cambodia creating innovative solutions and building amazing digital experiences.",
+  title: "DevOps Engineer & Full-stack Developer.",
+  description: "A Computer Science student graduating in 2025 with skills in DevOps Engineering and Full-stack Development.",
   location: "Phnom Penh, Cambodia",
   portfolio: "https://lynasovann.site"
 };
