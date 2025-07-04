@@ -3,7 +3,9 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/mode-toggle";
-import { Menu, X, Download } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import DownloadCVBtn from "./button/download-cv-btn";
+import Link from "next/link";
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,12 +26,6 @@ export function Navigation() {
     // { href: "#contact", label: "Contact" },
   ];
 
-  const handleDownloadCV = () => {
-    // Add your CV download logic here
-    // For example: window.open('/path-to-your-cv.pdf', '_blank');
-    console.log("Download CV clicked");
-  };
-
   return (
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
@@ -45,24 +41,17 @@ export function Navigation() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
-              <a
+              <Link
                 key={item.href}
                 href={item.href}
                 className="text-foreground hover:text-primary transition-colors duration-200"
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
             <ModeToggle />
 
-            <Button
-              className="bg-primary hover:bg-primary/90"
-              size="sm"
-              onClick={handleDownloadCV}
-            >
-              <Download className="h-4 w-4" />
-              <span>CV</span>
-            </Button>
+            <DownloadCVBtn />
           </div>
 
           {/* Mobile Navigation */}
@@ -96,14 +85,8 @@ export function Navigation() {
                   {item.label}
                 </a>
               ))}
-              <Button
-                className="bg-primary hover:bg-primary/90"
-                size="sm"
-                onClick={handleDownloadCV}
-              >
-                <Download className="h-4 w-4" />
-                <span>CV</span>
-              </Button>
+
+              <DownloadCVBtn />
             </div>
           </div>
         )}
