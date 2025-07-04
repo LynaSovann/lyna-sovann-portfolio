@@ -8,8 +8,7 @@ export default function ExperiencesPage() {
       blackTitle="My"
       redTitle="Experiences"
       content={
-        <>Update soon...</>
-        // <ExperiencePageComponent/>
+        <ExperiencePageComponent/>
       }
     />
   );
