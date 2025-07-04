@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { motion } from "framer-motion"
-import Image from "next/image"
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { motion } from "framer-motion";
+import Image from "next/image";
 import {
   Code2,
   Music,
@@ -18,13 +18,16 @@ import {
   Globe,
   Heart,
   Users,
-} from "lucide-react"
-import { personalInfo } from "@/data/social-data"
-import LayoutPage from "@/components/layout/page-layout"
-import HobbyCard from "@/components/card/hobby-card"
+} from "lucide-react";
+import { personalInfo } from "@/data/social-data";
+import LayoutPage from "@/components/layout/page-layout";
+import HobbyCard from "@/components/card/hobby-card";
+import PersonalInfo from "./personal-infor";
+import ContactInfo from "./contact-info";
+import LittleThingsInfo from "./little-things-info";
 
 export function About() {
-  const interests = ["Web Development", "UI/UX Design", "DevOps Engineering"]
+  const interests = ["Web Development", "UI/UX Design", "DevOps Engineering"];
 
   const hobbies = [
     {
@@ -42,74 +45,34 @@ export function About() {
       icon: Watch,
       description: "Enjoying outdoor runs, even if I'm not exactly a runner.",
     },
-  ]
+  ];
 
-  // Personal Information Data
-  const personalDetails = [
-    {
-      icon: User,
-      label: "Full Name",
-      value: "Sovann Lyna",
-      color: "text-blue-500",
-    },
-    {
-      icon: Calendar,
-      label: "Date of Birth",
-      value: "July 07, 2004",
-      color: "text-green-500",
-    },
-    {
-      icon: Users,
-      label: "Gender",
-      value: "Female",
-      color: "text-purple-500",
-    },
-    {
-      icon: Briefcase,
-      label: "Current Position",
-      value: "Senior Fullstack Developer",
-      color: "text-orange-500",
-    },
-    {
-      icon: MapPin,
-      label: "Location",
-      value: personalInfo.location,
-      color: "text-red-500",
-    },
-    {
-      icon: Heart,
-      label: "Relationship Status",
-      value: "Single",
-      color: "text-pink-500",
-    },
-  ]
-
-  const contactDetails = [
-    {
-      icon: Mail,
-      label: "Email",
-      value: "sovannlyna2004@gmail.com",
-      color: "text-blue-500",
-      isLink: true,
-      href: "mailto:sovannlyna2004@gmail.com",
-    },
-    {
-      icon: Phone,
-      label: "Phone",
-      value: "+855 962626669",
-      color: "text-green-500",
-      isLink: true,
-      href: "tel:+855962626669",
-    },
-    {
-      icon: Globe,
-      label: "Website",
-      value: "https://lynasovann.site",
-      color: "text-purple-500",
-      isLink: true,
-      href: "https://lynasovann.site",
-    },
-  ]
+  // const contactDetails = [
+  //   {
+  //     icon: Mail,
+  //     label: "Email",
+  //     value: "sovannlyna2004@gmail.com",
+  //     color: "text-blue-500",
+  //     isLink: true,
+  //     href: "mailto:sovannlyna2004@gmail.com",
+  //   },
+  //   {
+  //     icon: Phone,
+  //     label: "Phone",
+  //     value: "+1 (555) 123-4567",
+  //     color: "text-green-500",
+  //     isLink: true,
+  //     href: "tel:+15551234567",
+  //   },
+  //   {
+  //     icon: Globe,
+  //     label: "Website",
+  //     value: "www.sovannlyna.dev",
+  //     color: "text-purple-500",
+  //     isLink: true,
+  //     href: "https://www.sovannlyna.dev",
+  //   },
+  // ]
 
   const quickFacts = [
     { label: "Years of Experience", value: "5+", icon: "💼" },
@@ -118,7 +81,7 @@ export function About() {
     { label: "Favorite IDE", value: "VS Code", icon: "💻" },
     { label: "Preferred OS", value: "Linux", icon: "🐧" },
     { label: "Time Zone", value: "PST", icon: "🌍" },
-  ]
+  ];
 
   return (
     <LayoutPage
@@ -127,148 +90,75 @@ export function About() {
       redTitle="Me"
       content={
         <main>
-          {/* Hero Section with Description */}
+          {/* Hero Section - Redesigned */}
           <div className="mb-16">
-            <Card className="max-w-4xl mx-auto">
-              <CardContent className="p-8">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
-                    <Code2 className="w-8 h-8 text-primary" />
+            <div className="text-center max-w-3xl mx-auto">
+              {/* Name and Title */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+                className="mb-8"
+              >
+                <h3 className="text-4xl font-bold mb-2">{personalInfo.name}</h3>
+                <p className="text-xl text-muted-foreground flex items-center justify-center gap-2">
+                  <MapPin className="w-5 h-5" />
+                  {personalInfo.location}
+                </p>
+              </motion.div>
+
+              {/* Three Key Descriptors */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                viewport={{ once: true }}
+                className="flex justify-center gap-8 mb-8"
+              >
+                <div className="text-center group">
+                  <div className="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform duration-300">
+                    <Code2 className="w-8 h-8 text-blue-500" />
                   </div>
-                  <div>
-                    <h3 className="text-2xl font-bold">{personalInfo.name}</h3>
-                    <p className="text-muted-foreground flex items-center gap-2">
-                      <MapPin className="w-4 h-4" />
-                      {personalInfo.location}
-                    </p>
-                  </div>
+                  <p className="font-semibold text-lg">Developer</p>
                 </div>
 
-                <p className="text-lg text-muted-foreground leading-relaxed">
-                  I'm a little introverted but friendly :D Feel free to reach out, whether you have a question or just want to say hi, I'd love to hear from you! 😀
+                <div className="text-center group">
+                  <div className="w-16 h-16 bg-green-500/10 rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform duration-300">
+                    <Users className="w-8 h-8 text-green-500" />
+                  </div>
+                  <p className="font-semibold text-lg">Innovator</p>
+                </div>
+
+                <div className="text-center group">
+                  <div className="w-16 h-16 bg-purple-500/10 rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform duration-300">
+                    <Heart className="w-8 h-8 text-purple-500" />
+                  </div>
+                  <p className="font-semibold text-lg">Creator</p>
+                </div>
+              </motion.div>
+
+              {/* Short Bio */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                viewport={{ once: true }}
+              >
+                <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+                  I'm a little introverted but friendly :D Feel free to reach
+                  out, whether you have a question or just want to say hi, I'd
+                  love to hear from you! 😀
                 </p>
-              </CardContent>
-            </Card>
+              </motion.div>
+            </div>
           </div>
 
           {/* Personal Information with Image - New Section */}
-          <div className="mb-16">
-            <h3 className="text-2xl font-bold text-center mb-8">Personal Details</h3>
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              {/* Left Side - Single Profile Image */}
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-                className="flex justify-center"
-              >
-                <div className="relative">
-                  <div className="w-80 h-80 rounded-2xl overflow-hidden shadow-2xl">
-                    <Image src="/user.jpg" alt="Sovann Lyna - Professional Photo" fill className="object-cover" />
-                  </div>
-                  {/* Decorative elements around the image */}
-                  <div className="absolute -top-4 -right-4 w-8 h-8 bg-primary rounded-full animate-pulse"></div>
-                  <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-primary/60 rounded-full animate-pulse delay-300"></div>
-                  <div className="absolute top-1/2 -left-6 w-4 h-4 border-2 border-primary rounded-full animate-bounce"></div>
-                </div>
-              </motion.div>
-
-              {/* Right Side - Personal Information */}
-              <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-                className="space-y-6"
-              >
-                <div className="grid gap-4">
-                  {personalDetails.map((detail, index) => (
-                    <motion.div
-                      key={detail.label}
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: index * 0.1 }}
-                      viewport={{ once: true }}
-                      className="flex items-center gap-4 p-4 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors duration-200"
-                    >
-                      <div className="w-12 h-12 rounded-xl bg-background flex items-center justify-center shadow-sm">
-                        <detail.icon className={`w-6 h-6 ${detail.color}`} />
-                      </div>
-                      <div className="flex-1">
-                        <p className="text-sm text-muted-foreground font-medium">{detail.label}</p>
-                        <p className="font-semibold text-foreground text-lg">{detail.value}</p>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
-            </div>
-          </div>
+          <PersonalInfo />
 
           {/* Contact Information with Image - New Section */}
-          <div className="mb-16">
-            <h3 className="text-2xl font-bold text-center mb-8">Get In Touch</h3>
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              {/* Left Side - Contact Image */}
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-                className="flex justify-center"
-              >
-                <div className="relative">
-                  <div className="w-80 h-80 rounded-2xl overflow-hidden shadow-2xl">
-                    <Image src="/user.jpg" alt="Sovann Lyna - Contact Photo" fill className="object-cover" />
-                  </div>
-                  {/* Different decorative elements for contact section */}
-                  <div className="absolute -top-4 -left-4 w-6 h-6 bg-green-500 rounded-full animate-pulse"></div>
-                  <div className="absolute -bottom-4 -right-4 w-8 h-8 bg-blue-500/60 rounded-full animate-pulse delay-500"></div>
-                  <div className="absolute top-1/4 -right-6 w-4 h-4 border-2 border-green-500 rounded-full animate-bounce delay-200"></div>
-                </div>
-              </motion.div>
-
-              {/* Right Side - Contact Information */}
-              <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-                className="space-y-6"
-              >
-                <div className="grid gap-4">
-                  {contactDetails.map((contact, index) => (
-                    <motion.div
-                      key={contact.label}
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: index * 0.1 }}
-                      viewport={{ once: true }}
-                      className="flex items-center gap-4 p-4 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors duration-200 group"
-                    >
-                      <div className="w-12 h-12 rounded-xl bg-background flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-200">
-                        <contact.icon className={`w-6 h-6 ${contact.color}`} />
-                      </div>
-                      <div className="flex-1">
-                        <p className="text-sm text-muted-foreground font-medium">{contact.label}</p>
-                        {contact.isLink ? (
-                          <a
-                            href={contact.href}
-                            className="font-semibold text-foreground hover:text-primary transition-colors duration-200 break-all text-lg"
-                          >
-                            {contact.value}
-                          </a>
-                        ) : (
-                          <p className="font-semibold text-foreground text-lg">{contact.value}</p>
-                        )}
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
-            </div>
-          </div>
+          <ContactInfo />
 
           {/* Quick Facts */}
           {/* <div className="mb-16">
@@ -285,8 +175,12 @@ export function About() {
                 >
                   <Card className="text-center p-4 hover:shadow-lg transition-all duration-300 border-0 bg-gradient-to-br from-background to-muted/10">
                     <div className="text-2xl mb-2">{fact.icon}</div>
-                    <div className="text-lg font-bold text-primary mb-1">{fact.value}</div>
-                    <div className="text-xs text-muted-foreground leading-tight">{fact.label}</div>
+                    <div className="text-lg font-bold text-primary mb-1">
+                      {fact.value}
+                    </div>
+                    <div className="text-xs text-muted-foreground leading-tight">
+                      {fact.label}
+                    </div>
                   </Card>
                 </motion.div>
               ))}
@@ -295,7 +189,9 @@ export function About() {
 
           {/* Hobbies */}
           <div className="mb-16">
-            <h3 className="text-2xl font-bold text-center mb-8">Hobbies & Interests</h3>
+            <h3 className="text-2xl font-bold text-center mb-8">
+              Hobbies & Interests
+            </h3>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {hobbies.map((hobby, index) => (
                 <motion.div
@@ -311,6 +207,9 @@ export function About() {
             </div>
           </div>
 
+          {/* Little Things I Love */}
+          <LittleThingsInfo />
+
           {/* Professional Summary */}
           {/* <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -320,12 +219,17 @@ export function About() {
           >
             <Card className="max-w-4xl mx-auto bg-gradient-to-r from-primary/5 to-primary/10 border-primary/20">
               <CardContent className="p-8 text-center">
-                <h3 className="text-2xl font-bold mb-4">Professional Summary</h3>
+                <h3 className="text-2xl font-bold mb-4">
+                  Professional Summary
+                </h3>
                 <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-                  With over 5 years of experience in full-stack development, I specialize in creating robust, scalable
-                  applications using modern technologies. My expertise spans from frontend frameworks like React and
-                  Next.js to backend systems with Spring Boot and Java. I'm passionate about DevOps practices and
-                  continuously learning new technologies to stay at the forefront of software development.
+                  With over 5 years of experience in full-stack development, I
+                  specialize in creating robust, scalable applications using
+                  modern technologies. My expertise spans from frontend
+                  frameworks like React and Next.js to backend systems with
+                  Spring Boot and Java. I'm passionate about DevOps practices
+                  and continuously learning new technologies to stay at the
+                  forefront of software development.
                 </p>
                 <div className="flex justify-center gap-4">
                   <Badge className="bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2">
@@ -341,5 +245,5 @@ export function About() {
         </main>
       }
     />
-  )
+  );
 }
