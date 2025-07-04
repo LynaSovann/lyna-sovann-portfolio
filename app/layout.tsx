@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     default: "Sovann Lyna - Fullstack Developer & DevOps Engineer",
     template: "%s | Sovann Lyna"
   },
-  description: "A passionate Fullstack Developer & DevOps Engineer from Cambodia, creating scalable, efficient, and user-centered digital experiences. Specialized in modern web technologies and cloud infrastructure.",
+  description: "A Computer Science student graduating in 2025 with skills in DevOps Engineering and Full-stack Development.",
   keywords: [
     "Sovann Lyna",
     "Fullstack Developer",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://lynasovann.site',
     title: 'Sovann Lyna - Fullstack Developer & DevOps Engineer',
-    description: 'A passionate Fullstack Developer & DevOps Engineer from Cambodia, creating scalable, efficient, and user-centered digital experiences.',
+    description: 'A Computer Science student graduating in 2025 with skills in DevOps Engineering and Full-stack Development.',
     siteName: 'Sovann Lyna Portfolio',
     images: [
       {
@@ -61,7 +61,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Sovann Lyna - Fullstack Developer & DevOps Engineer',
-    description: 'A passionate Fullstack Developer & DevOps Engineer from Cambodia, creating scalable, efficient, and user-centered digital experiences.',
+    description: 'A Computer Science student graduating in 2025 with skills in DevOps Engineering and Full-stack Development.',
     images: ['/og-image.jpg'],
     creator: '@lyna_sovann',
   },
