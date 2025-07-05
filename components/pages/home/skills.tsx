@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
-import LayoutPage from "./layout/page-layout";
+import LayoutPage from "../../layout/page-layout";
 import { Layers, FileCode, Cpu, Shield, Zap, Smartphone } from "lucide-react";
 import { skillCategories } from "@/data/skill-category";
 

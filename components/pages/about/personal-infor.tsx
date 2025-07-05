@@ -36,7 +36,7 @@ export default function PersonalInfo() {
     {
       icon: Briefcase,
       label: "Current Position",
-      value: "Senior Fullstack Developer",
+      value: "IT Instructor",
       color: "text-orange-500",
     },
     {
