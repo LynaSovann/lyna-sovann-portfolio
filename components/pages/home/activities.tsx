@@ -1,17 +1,26 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import Image from "next/image"
-import { ChevronLeft, ChevronRight, Calendar, MapPin, Users, Award } from "lucide-react"
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Calendar,
+  MapPin,
+  Users,
+  Award,
+} from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 export default function Activities() {
-  const [currentSlide, setCurrentSlide] = useState(0)
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true)
-  const [selectedImageIndex, setSelectedImageIndex] = useState<{ [key: number]: number }>({})
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [selectedImageIndex, setSelectedImageIndex] = useState<{
+    [key: number]: number;
+  }>({});
 
   const activities = [
     {
@@ -68,54 +77,56 @@ export default function Activities() {
     //     { src: "/hackathon-3.jpg", alt: "Winning team celebration" },
     //   ],
     // },
-  ]
+  ];
 
   // Auto-play functionality
   useEffect(() => {
-    if (!isAutoPlaying) return
+    if (!isAutoPlaying) return;
 
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % activities.length)
-    }, 4000)
+      setCurrentSlide((prev) => (prev + 1) % activities.length);
+    }, 4000);
 
-    return () => clearInterval(interval)
-  }, [isAutoPlaying, activities.length])
+    return () => clearInterval(interval);
+  }, [isAutoPlaying, activities.length]);
 
   // Initialize selected image index for each activity
   useEffect(() => {
-    const initialSelection: { [key: number]: number } = {}
+    const initialSelection: { [key: number]: number } = {};
     activities.forEach((activity) => {
-      initialSelection[activity.id] = 0
-    })
-    setSelectedImageIndex(initialSelection)
-  }, [])
+      initialSelection[activity.id] = 0;
+    });
+    setSelectedImageIndex(initialSelection);
+  }, []);
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % activities.length)
-    setIsAutoPlaying(false)
-  }
+    setCurrentSlide((prev) => (prev + 1) % activities.length);
+    setIsAutoPlaying(false);
+  };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + activities.length) % activities.length)
-    setIsAutoPlaying(false)
-  }
+    setCurrentSlide(
+      (prev) => (prev - 1 + activities.length) % activities.length
+    );
+    setIsAutoPlaying(false);
+  };
 
   const goToSlide = (index: number) => {
-    setCurrentSlide(index)
-    setIsAutoPlaying(false)
-  }
+    setCurrentSlide(index);
+    setIsAutoPlaying(false);
+  };
 
   const selectImage = (activityId: number, imageIndex: number) => {
     setSelectedImageIndex((prev) => ({
       ...prev,
       [activityId]: imageIndex,
-    }))
-  }
+    }));
+  };
 
   const getCurrentImage = (activity: any) => {
-    const selectedIndex = selectedImageIndex[activity.id] || 0
-    return activity.gallery?.[selectedIndex]?.src || activity.image
-  }
+    const selectedIndex = selectedImageIndex[activity.id] || 0;
+    return activity.gallery?.[selectedIndex]?.src || activity.image;
+  };
 
   return (
     <section className="py-20 bg-muted/30">
@@ -128,10 +139,14 @@ export default function Activities() {
           className="text-center mb-12"
         >
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-            My <span className="text-primary">Journey</span>
+            My{" "}
+            <span className="text-primary">
+              Volunteer & Activity Highlights
+            </span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Extra Activities & Volunteery work I've truly enjoyed and loved being involved in.
+            Extra Activities & Volunteery work I've truly enjoyed and loved
+            being involved in.
           </p>
         </motion.div>
 
@@ -155,7 +170,10 @@ export default function Activities() {
                       <div className="relative flex-1 overflow-hidden">
                         <AnimatePresence mode="wait">
                           <motion.div
-                            key={`${activities[currentSlide].id}-${selectedImageIndex[activities[currentSlide].id] || 0}`}
+                            key={`${activities[currentSlide].id}-${
+                              selectedImageIndex[activities[currentSlide].id] ||
+                              0
+                            }`}
                             initial={{ opacity: 0, scale: 1.1 }}
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.9 }}
@@ -163,7 +181,10 @@ export default function Activities() {
                             className="absolute inset-0"
                           >
                             <Image
-                              src={getCurrentImage(activities[currentSlide]) || "/placeholder.svg"}
+                              src={
+                                getCurrentImage(activities[currentSlide]) ||
+                                "/placeholder.svg"
+                              }
                               alt={activities[currentSlide].title}
                               fill
                               className="object-cover transition-transform duration-700 group-hover:scale-110"
@@ -186,8 +207,12 @@ export default function Activities() {
                           className="absolute inset-0 bg-primary/20 flex items-center justify-center backdrop-blur-sm transition-all duration-300"
                         >
                           <div className="text-white text-center">
-                            {activities[currentSlide].icon && <Award className="w-12 h-12 mx-auto mb-2" />}
-                            <p className="font-semibold text-lg">{activities[currentSlide].title}</p>
+                            {activities[currentSlide].icon && (
+                              <Award className="w-12 h-12 mx-auto mb-2" />
+                            )}
+                            <p className="font-semibold text-lg">
+                              {activities[currentSlide].title}
+                            </p>
                           </div>
                         </motion.div>
                       </div>
@@ -196,32 +221,43 @@ export default function Activities() {
                       {activities[currentSlide].gallery && (
                         <div className="p-4 bg-black/10 backdrop-blur-sm">
                           <div className="flex gap-2 justify-center">
-                            {activities[currentSlide].gallery.map((photo, index) => (
-                              <motion.button
-                                key={index}
-                                onClick={() => selectImage(activities[currentSlide].id, index)}
-                                className={`relative w-16 h-16 rounded-lg overflow-hidden transition-all duration-300 ${
-                                  (selectedImageIndex[activities[currentSlide].id] || 0) === index
-                                    ? "ring-2 ring-primary scale-110"
-                                    : "hover:scale-105 opacity-70 hover:opacity-100"
-                                }`}
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                              >
-                                <Image
-                                  src={photo.src || "/placeholder.svg"}
-                                  alt={photo.alt}
-                                  fill
-                                  className="object-cover"
-                                />
-                                <div className="absolute inset-0 bg-black/20" />
+                            {activities[currentSlide].gallery.map(
+                              (photo, index) => (
+                                <motion.button
+                                  key={index}
+                                  onClick={() =>
+                                    selectImage(
+                                      activities[currentSlide].id,
+                                      index
+                                    )
+                                  }
+                                  className={`relative w-16 h-16 rounded-lg overflow-hidden transition-all duration-300 ${
+                                    (selectedImageIndex[
+                                      activities[currentSlide].id
+                                    ] || 0) === index
+                                      ? "ring-2 ring-primary scale-110"
+                                      : "hover:scale-105 opacity-70 hover:opacity-100"
+                                  }`}
+                                  whileHover={{ scale: 1.05 }}
+                                  whileTap={{ scale: 0.95 }}
+                                >
+                                  <Image
+                                    src={photo.src || "/placeholder.svg"}
+                                    alt={photo.alt}
+                                    fill
+                                    className="object-cover"
+                                  />
+                                  <div className="absolute inset-0 bg-black/20" />
 
-                                {/* Active indicator */}
-                                {(selectedImageIndex[activities[currentSlide].id] || 0) === index && (
-                                  <div className="absolute inset-0 border-2 border-primary rounded-lg" />
-                                )}
-                              </motion.button>
-                            ))}
+                                  {/* Active indicator */}
+                                  {(selectedImageIndex[
+                                    activities[currentSlide].id
+                                  ] || 0) === index && (
+                                    <div className="absolute inset-0 border-2 border-primary rounded-lg" />
+                                  )}
+                                </motion.button>
+                              )
+                            )}
                           </div>
                         </div>
                       )}
@@ -234,7 +270,9 @@ export default function Activities() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
                       >
-                        <h3 className="text-2xl font-bold mb-4 text-foreground">{activities[currentSlide].title}</h3>
+                        <h3 className="text-2xl font-bold mb-4 text-foreground">
+                          {activities[currentSlide].title}
+                        </h3>
 
                         <p className="text-muted-foreground mb-6 leading-relaxed">
                           {activities[currentSlide].description}
@@ -244,22 +282,32 @@ export default function Activities() {
                         <div className="space-y-3 mb-6">
                           <div className="flex items-center gap-3 text-sm">
                             <Calendar className="w-4 h-4 text-primary" />
-                            <span className="text-muted-foreground">{activities[currentSlide].date}</span>
+                            <span className="text-muted-foreground">
+                              {activities[currentSlide].date}
+                            </span>
                           </div>
                           <div className="flex items-center gap-3 text-sm">
                             <MapPin className="w-4 h-4 text-primary" />
-                            <span className="text-muted-foreground">{activities[currentSlide].location}</span>
+                            <span className="text-muted-foreground">
+                              {activities[currentSlide].location}
+                            </span>
                           </div>
                           <div className="flex items-center gap-3 text-sm">
                             <Users className="w-4 h-4 text-primary" />
-                            <span className="text-muted-foreground">{activities[currentSlide].participants}</span>
+                            <span className="text-muted-foreground">
+                              {activities[currentSlide].participants}
+                            </span>
                           </div>
                         </div>
 
                         {/* Tags */}
                         <div className="flex flex-wrap gap-2">
                           {activities[currentSlide].tags.map((tag, index) => (
-                            <Badge key={index} variant="outline" className="text-xs">
+                            <Badge
+                              key={index}
+                              variant="outline"
+                              className="text-xs"
+                            >
                               {tag}
                             </Badge>
                           ))}
@@ -270,8 +318,11 @@ export default function Activities() {
                           <div className="mt-4 p-3 bg-muted/30 rounded-lg">
                             <p className="text-sm text-muted-foreground italic">
                               {
-                                activities[currentSlide].gallery[selectedImageIndex[activities[currentSlide].id] || 0]
-                                  ?.alt
+                                activities[currentSlide].gallery[
+                                  selectedImageIndex[
+                                    activities[currentSlide].id
+                                  ] || 0
+                                ]?.alt
                               }
                             </p>
                           </div>
@@ -358,7 +409,9 @@ export default function Activities() {
                     />
                     <div className="absolute inset-0 bg-black/20" />
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <p className="text-white text-xs font-medium text-center px-2">{activity.title}</p>
+                      <p className="text-white text-xs font-medium text-center px-2">
+                        {activity.title}
+                      </p>
                     </div>
                   </div>
                 </Card>
@@ -368,5 +421,5 @@ export default function Activities() {
         </motion.div>
       </div>
     </section>
-  )
+  );
 }
