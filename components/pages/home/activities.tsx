@@ -11,70 +11,62 @@ import { Badge } from "@/components/ui/badge"
 export default function Activities() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
+  const [selectedImageIndex, setSelectedImageIndex] = useState<{ [key: number]: number }>({})
 
   const activities = [
     {
       id: 1,
       title: "OUR PRIDE 2025",
       description:
-        "OUR PRIDE is a community program that aspires to raise awareness and empower the LGBTQ+ commnuity in Cambodia through mentorship programs and other various programs tailors to promoting inclusivity and quity across Cambodia.",
-      image: "/our-pride-2025.jpg",
+        "OUR PRIDE is a community program that aspires to raise awareness and empower the LGBTQ+ community in Cambodia through mentorship programs and other various programs tailored to promoting inclusivity and equity across Cambodia.",
+      image: "/our-pride/our-pride-2025.jpg",
       date: "June 29th, 2025",
       location: "Raintree, Phnom Penh, Cambodia",
       type: "LGBTQ+ Community",
       participants: "100+ attendees",
       icon: Award,
       tags: ["Volunteer", "Registration & Guide"],
+      gallery: [
+        { src: "/our-pride/img-1.jpg", alt: "N/A" },
+        { src: "/our-pride/our-pride-2025.jpg", alt: "N/A" },
+        { src: "/our-pride/img-2.jpg", alt: "N/A" },
+      ],
     },
     // {
     //   id: 2,
+    //   title: "Tech Conference 2024",
+    //   description:
+    //     "Attended the annual tech conference where I learned about the latest trends in AI and machine learning, connecting with industry leaders and fellow developers.",
+    //   image: "/tech-conf-1.jpg",
+    //   date: "March 2024",
+    //   location: "San Francisco, CA",
+    //   type: "Conference",
+    //   participants: "500+ attendees",
+    //   icon: Award,
+    //   tags: ["AI", "Machine Learning", "Networking"],
+    //   gallery: [
+    //     { src: "/tech-conf-1.jpg", alt: "Conference keynote presentation" },
+    //     { src: "/tech-conf-2.jpg", alt: "Networking session with industry leaders" },
+    //     { src: "/tech-conf-3.jpg", alt: "AI workshop demonstration" },
+    //   ],
+    // },
+    // {
+    //   id: 3,
     //   title: "Hackathon Winner",
     //   description:
-    //     "Won first place in the 48-hour hackathon by building an innovative web application for local businesses.",
-    //   image: "/user.jpg",
+    //     "Won first place in the 48-hour hackathon by building an innovative web application for local businesses using React and Node.js.",
+    //   image: "/hackathon-1.jpg",
     //   date: "February 2024",
     //   location: "Silicon Valley",
     //   type: "Competition",
     //   participants: "100+ developers",
     //   icon: Award,
     //   tags: ["React", "Node.js", "Innovation"],
-    // },
-    // {
-    //   id: 3,
-    //   title: "Open Source Contribution",
-    //   description: "Made significant contributions to popular open-source projects, helping improve developer tools.",
-    //   image: "/user.jpg",
-    //   date: "January 2024",
-    //   location: "Remote",
-    //   type: "Development",
-    //   participants: "Global community",
-    //   icon: Users,
-    //   tags: ["Open Source", "GitHub", "Community"],
-    // },
-    // {
-    //   id: 4,
-    //   title: "Workshop Speaker",
-    //   description: "Conducted a workshop on modern web development practices for junior developers and students.",
-    //   image: "/user.jpg",
-    //   date: "December 2023",
-    //   location: "Local University",
-    //   type: "Speaking",
-    //   participants: "50+ students",
-    //   icon: Users,
-    //   tags: ["Teaching", "Web Development", "Mentoring"],
-    // },
-    // {
-    //   id: 5,
-    //   title: "Team Building Retreat",
-    //   description:
-    //     "Participated in company retreat focused on collaboration, innovation, and team building activities.",
-    //   image: "/user.jpg",
-    //   date: "November 2023",
-    //   location: "Mountain Resort",
-    //   type: "Team Event",
-    //   participants: "30+ colleagues",
-    //   icon: Users,
-    //   tags: ["Team Building", "Leadership", "Collaboration"],
+    //   gallery: [
+    //     { src: "/hackathon-1.jpg", alt: "Team brainstorming session" },
+    //     { src: "/hackathon-2.jpg", alt: "Coding through the night" },
+    //     { src: "/hackathon-3.jpg", alt: "Winning team celebration" },
+    //   ],
     // },
   ]
 
@@ -88,6 +80,15 @@ export default function Activities() {
 
     return () => clearInterval(interval)
   }, [isAutoPlaying, activities.length])
+
+  // Initialize selected image index for each activity
+  useEffect(() => {
+    const initialSelection: { [key: number]: number } = {}
+    activities.forEach((activity) => {
+      initialSelection[activity.id] = 0
+    })
+    setSelectedImageIndex(initialSelection)
+  }, [])
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % activities.length)
@@ -104,6 +105,18 @@ export default function Activities() {
     setIsAutoPlaying(false)
   }
 
+  const selectImage = (activityId: number, imageIndex: number) => {
+    setSelectedImageIndex((prev) => ({
+      ...prev,
+      [activityId]: imageIndex,
+    }))
+  }
+
+  const getCurrentImage = (activity: any) => {
+    const selectedIndex = selectedImageIndex[activity.id] || 0
+    return activity.gallery?.[selectedIndex]?.src || activity.image
+  }
+
   return (
     <section className="py-20 bg-muted/30">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -118,8 +131,7 @@ export default function Activities() {
             My <span className="text-primary">Journey</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Explore the events, and activities that have shaped my professional growth and learning
-            journey.
+            Extra Activities & Volunteery work I've truly enjoyed and loved being involved in.
           </p>
         </motion.div>
 
@@ -138,33 +150,81 @@ export default function Activities() {
                 <Card className="h-full overflow-hidden border-0 shadow-2xl">
                   <div className="grid md:grid-cols-2 h-full">
                     {/* Image Side */}
-                    <div className="relative overflow-hidden group">
-                      <Image
-                        src={activities[currentSlide].image || "/placeholder.svg"}
-                        alt={activities[currentSlide].title}
-                        fill
-                        className="object-cover transition-transform duration-700 group-hover:scale-110"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                    <div className="relative overflow-hidden group flex flex-col">
+                      {/* Main Image */}
+                      <div className="relative flex-1 overflow-hidden">
+                        <AnimatePresence mode="wait">
+                          <motion.div
+                            key={`${activities[currentSlide].id}-${selectedImageIndex[activities[currentSlide].id] || 0}`}
+                            initial={{ opacity: 0, scale: 1.1 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.9 }}
+                            transition={{ duration: 0.3 }}
+                            className="absolute inset-0"
+                          >
+                            <Image
+                              src={getCurrentImage(activities[currentSlide]) || "/placeholder.svg"}
+                              alt={activities[currentSlide].title}
+                              fill
+                              className="object-cover transition-transform duration-700 group-hover:scale-110"
+                            />
+                          </motion.div>
+                        </AnimatePresence>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
 
-                      {/* Floating Badge */}
-                      <div className="absolute top-6 left-6">
-                        <Badge className="bg-primary/90 text-primary-foreground backdrop-blur-sm">
-                          {activities[currentSlide].type}
-                        </Badge>
+                        {/* Floating Badge */}
+                        <div className="absolute top-6 left-6">
+                          <Badge className="bg-primary/90 text-primary-foreground backdrop-blur-sm">
+                            {activities[currentSlide].type}
+                          </Badge>
+                        </div>
+
+                        {/* Hover Overlay */}
+                        <motion.div
+                          initial={{ opacity: 0 }}
+                          whileHover={{ opacity: 1 }}
+                          className="absolute inset-0 bg-primary/20 flex items-center justify-center backdrop-blur-sm transition-all duration-300"
+                        >
+                          <div className="text-white text-center">
+                            {activities[currentSlide].icon && <Award className="w-12 h-12 mx-auto mb-2" />}
+                            <p className="font-semibold text-lg">{activities[currentSlide].title}</p>
+                          </div>
+                        </motion.div>
                       </div>
 
-                      {/* Hover Overlay */}
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        whileHover={{ opacity: 1 }}
-                        className="absolute inset-0 bg-primary/20 flex items-center justify-center backdrop-blur-sm transition-all duration-300"
-                      >
-                        <div className="text-white text-center">
-                          {activities[currentSlide].icon && <Award className="w-12 h-12 mx-auto mb-2" />}
-                          <p className="font-semibold text-lg">{activities[currentSlide].title}</p>
+                      {/* Thumbnail Gallery */}
+                      {activities[currentSlide].gallery && (
+                        <div className="p-4 bg-black/10 backdrop-blur-sm">
+                          <div className="flex gap-2 justify-center">
+                            {activities[currentSlide].gallery.map((photo, index) => (
+                              <motion.button
+                                key={index}
+                                onClick={() => selectImage(activities[currentSlide].id, index)}
+                                className={`relative w-16 h-16 rounded-lg overflow-hidden transition-all duration-300 ${
+                                  (selectedImageIndex[activities[currentSlide].id] || 0) === index
+                                    ? "ring-2 ring-primary scale-110"
+                                    : "hover:scale-105 opacity-70 hover:opacity-100"
+                                }`}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                              >
+                                <Image
+                                  src={photo.src || "/placeholder.svg"}
+                                  alt={photo.alt}
+                                  fill
+                                  className="object-cover"
+                                />
+                                <div className="absolute inset-0 bg-black/20" />
+
+                                {/* Active indicator */}
+                                {(selectedImageIndex[activities[currentSlide].id] || 0) === index && (
+                                  <div className="absolute inset-0 border-2 border-primary rounded-lg" />
+                                )}
+                              </motion.button>
+                            ))}
+                          </div>
                         </div>
-                      </motion.div>
+                      )}
                     </div>
 
                     {/* Content Side */}
@@ -204,6 +264,18 @@ export default function Activities() {
                             </Badge>
                           ))}
                         </div>
+
+                        {/* Image Caption */}
+                        {activities[currentSlide].gallery && (
+                          <div className="mt-4 p-3 bg-muted/30 rounded-lg">
+                            <p className="text-sm text-muted-foreground italic">
+                              {
+                                activities[currentSlide].gallery[selectedImageIndex[activities[currentSlide].id] || 0]
+                                  ?.alt
+                              }
+                            </p>
+                          </div>
+                        )}
                       </motion.div>
                     </CardContent>
                   </div>
@@ -265,7 +337,7 @@ export default function Activities() {
           viewport={{ once: true }}
           className="mt-12"
         >
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
             {activities.map((activity, index) => (
               <motion.div
                 key={activity.id}
