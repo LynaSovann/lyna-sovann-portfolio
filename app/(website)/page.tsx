@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <main>
       <Hero />
-      <Activities/>
+      {/* <Activities/> */}
       {/* add slideshow or pic to show my overview activities , but create the modern style and beautiful design */}
       <Skills />
       {/* <Projects /> */}
