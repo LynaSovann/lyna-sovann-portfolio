@@ -30,7 +30,8 @@ export const metadata: Metadata = {
     "TypeScript",
     "Node.js",
     "Cloud Infrastructure",
-    "Portfolio"
+    "Portfolio",
+    "Cambodian Developer",
   ],
   authors: [{ name: "Sovann Lyna" }],
   creator: "Sovann Lyna",
@@ -95,6 +96,17 @@ export const metadata: Metadata = {
     'msapplication-TileColor': '#000000',
     'msapplication-config': '/browserconfig.xml',
   },
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
+    other: {
+      rel: 'icon',
+      url: '/favicon-32x32.png',
+      sizes: '32x32'
+    }
+  },
+  manifest: "/manifest.json",
 }
 
 export default function RootLayout({
