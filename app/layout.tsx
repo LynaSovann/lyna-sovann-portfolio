@@ -18,6 +18,8 @@ export const metadata: Metadata = {
   description: "A Computer Science student graduating in 2025 with skills in DevOps Engineering and Full-stack Development.",
   keywords: [
     "Sovann Lyna",
+    "Lyna Sovann",
+    "Portfolio",
     "Fullstack Developer",
     "DevOps Engineer",
     "Web Development",
@@ -38,14 +40,14 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://lynasovann.site'),
+  metadataBase: new URL('https://www.lynasovann.site'),
   alternates: {
     canonical: '/',
   },
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://lynasovann.site',
+    url: 'https://www.lynasovann.site',
     title: 'Sovann Lyna - Fullstack Developer & DevOps Engineer',
     description: 'A Computer Science student graduating in 2025 with skills in DevOps Engineering and Full-stack Development.',
     siteName: 'Sovann Lyna Portfolio',
