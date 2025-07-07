@@ -10,14 +10,10 @@ import {
   BookOpen,
   MapPin,
   Watch,
-  Calendar,
-  Briefcase,
-  User,
-  Mail,
-  Phone,
-  Globe,
   Heart,
   Users,
+  Camera,
+  Clock,
 } from "lucide-react";
 import { personalInfo } from "@/data/social-data";
 import LayoutPage from "@/components/layout/page-layout";
@@ -90,6 +86,8 @@ export function About() {
       redTitle="Me"
       content={
         <main>
+
+
           {/* Hero Section - Redesigned */}
           <div className="mb-16">
             <div className="text-center max-w-3xl mx-auto">
