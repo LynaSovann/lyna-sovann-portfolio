@@ -12,7 +12,7 @@ export default function CinematicHero() {
 
   return (
     <div className="mb-16">
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
@@ -25,7 +25,7 @@ export default function CinematicHero() {
         <p className="text-muted-foreground max-w-2xl mx-auto">
           A glimpse into the moments that define who I am
         </p>
-      </motion.div>
+      </motion.div> */}
 
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}

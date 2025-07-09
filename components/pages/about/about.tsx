@@ -88,7 +88,7 @@ export function About() {
       content={
         <main>
 
-          {/* <CinematicHero/> */}
+          <CinematicHero/>
 
 
           {/* Hero Section - Redesigned */}
