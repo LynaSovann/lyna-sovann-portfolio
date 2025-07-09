@@ -21,6 +21,7 @@ import HobbyCard from "@/components/card/hobby-card";
 import PersonalInfo from "./personal-infor";
 import ContactInfo from "./contact-info";
 import LittleThingsInfo from "./little-things-info";
+import CinematicHero from "./cinematicHero";
 
 export function About() {
   const interests = ["Web Development", "UI/UX Design", "DevOps Engineering"];
@@ -86,6 +87,8 @@ export function About() {
       redTitle="Me"
       content={
         <main>
+
+          {/* <CinematicHero/> */}
 
 
           {/* Hero Section - Redesigned */}
