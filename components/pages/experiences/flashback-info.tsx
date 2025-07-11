@@ -10,69 +10,69 @@ export default function FlashbackInfo() {
   const flashbackMoments = [
     {
       id: 1,
-      title: "This is fake data",
-      year: "2019",
+      title: "Finished High School",
+      year: "2021",
       description:
-        "The moment I wrote my first 'Hello World' and fell in love with programming",
+        "Finishing high school at Chea Sim Samiki High School ",
       image: "/user.jpg",
-      category: "Beginning",
+      category: "Learning",
       color: "from-blue-500/20 to-cyan-500/20",
     },
     {
       id: 2,
-      title: "This is fake data",
-      year: "2020-2022",
+      title: "Graduated College",
+      year: "2025",
       description:
-        "Late nights in the computer lab, learning algorithms and making lifelong friends",
+        "Graduated with a degree in Computer Science at the Royal University of Phnom Penh",
       image: "/user.jpg",
       category: "Learning",
       color: "from-green-500/20 to-emerald-500/20",
     },
     {
       id: 3,
-      title: "This is fake data",
-      year: "2022",
+      title: "First Job as an IT Instructor",
+      year: "Current",
       description:
-        "Nervous but excited, stepping into the professional world of software development",
+        "Started my career as an IT Instructor, sharing knowledge and inspiring the next generation",
       image: "/user.jpg",
-      category: "Growth",
+      category: "Working",
       color: "from-purple-500/20 to-violet-500/20",
     },
-    {
-      id: 4,
-      title: "This is fake data",
-      year: "2023",
-      description:
-        "The pride of landing my first developer role and building real applications",
-      image: "/user.jpg",
-      category: "Achievement",
-      color: "from-orange-500/20 to-red-500/20",
-    },
-    {
-      id: 5,
-      title: "This is fake data",
-      year: "2024",
-      description:
-        "Giving back to the community that taught me everything I know",
-      image: "/user.jpg",
-      category: "Community",
-      color: "from-pink-500/20 to-rose-500/20",
-    },
-    {
-      id: 6,
-      title: "This is fake data",
-      year: "2025",
-      description:
-        "Continuously learning, building, and dreaming of what's next",
-      image: "/user.jpg",
-      category: "Present",
-      color: "from-indigo-500/20 to-blue-500/20",
-    },
+    // {
+    //   id: 4,
+    //   title: "This is fake data",
+    //   year: "2023",
+    //   description:
+    //     "The pride of landing my first developer role and building real applications",
+    //   image: "/user.jpg",
+    //   category: "Achievement",
+    //   color: "from-orange-500/20 to-red-500/20",
+    // },
+    // {
+    //   id: 5,
+    //   title: "This is fake data",
+    //   year: "2024",
+    //   description:
+    //     "Giving back to the community that taught me everything I know",
+    //   image: "/user.jpg",
+    //   category: "Community",
+    //   color: "from-pink-500/20 to-rose-500/20",
+    // },
+    // {
+    //   id: 6,
+    //   title: "This is fake data",
+    //   year: "2025",
+    //   description:
+    //     "Continuously learning, building, and dreaming of what's next",
+    //   image: "/user.jpg",
+    //   category: "Present",
+    //   color: "from-indigo-500/20 to-blue-500/20",
+    // },
   ];
 
   return (
     <div className="mb-16">
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
@@ -86,7 +86,7 @@ export default function FlashbackInfo() {
         <p className="text-muted-foreground max-w-2xl mx-auto">
           A visual timeline of the moments that shaped my path as a developer
         </p>
-      </motion.div>
+      </motion.div> */}
 
       <div className="relative">
         {/* Timeline Line */}
