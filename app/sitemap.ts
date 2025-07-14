@@ -18,12 +18,12 @@ export default function sitemap() {
       changeFrequency: "weekly",
       priority: 0.8,
     },
-    {
-      url: "https://www.lynasovann.site/contact",
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.6,
-    },
+    // {
+    //   url: "https://www.lynasovann.site/contact",
+    //   lastModified: new Date(),
+    //   changeFrequency: "monthly",
+    //   priority: 0.6,
+    // },
     // Add more pages as needed
   ];
 }
