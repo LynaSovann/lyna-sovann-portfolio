@@ -14,7 +14,8 @@ export default function FlashbackInfo() {
       year: "2021",
       description:
         "Finishing high school at Chea Sim Samiki High School ",
-      image: "/user.jpg",
+      // image: "/smk-user.jpg",
+      image: "/fallback-img.jpg",
       category: "Learning",
       color: "from-blue-500/20 to-cyan-500/20",
     },
@@ -24,7 +25,7 @@ export default function FlashbackInfo() {
       year: "2025",
       description:
         "Graduated with a degree in Computer Science at the Royal University of Phnom Penh",
-      image: "/user.jpg",
+      image: "/rupp-user.jpg",
       category: "Learning",
       color: "from-green-500/20 to-emerald-500/20",
     },
@@ -34,7 +35,7 @@ export default function FlashbackInfo() {
       year: "Current",
       description:
         "Started my career as an IT Instructor, sharing knowledge and inspiring the next generation",
-      image: "/user.jpg",
+      image: "/hrd-user.jpg",
       category: "Working",
       color: "from-purple-500/20 to-violet-500/20",
     },

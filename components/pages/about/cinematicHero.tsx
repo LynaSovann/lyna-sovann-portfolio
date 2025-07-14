@@ -38,7 +38,7 @@ export default function CinematicHero() {
           <div className="relative aspect-[21/9] overflow-hidden group">
             {/* Main Cinematic Image */}
             <Image
-              src="/cinematic-hero.png"
+              src="/user.png"
               alt="Cinematic portrait"
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-105"
