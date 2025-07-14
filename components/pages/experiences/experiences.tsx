@@ -1,12 +1,14 @@
 "use client";
 
-import EducationsInfo from "./educations-info";
+import ExperienceTabs from "./experience-tabs";
 import FlashbackInfo from "./flashback-info";
 export default function ExperiencePageComponent() {
   return (
     <>
-    <FlashbackInfo/>
-      {/* <EducationsInfo /> */}
+      {/* <ExperienceTabs>
+        <FlashbackInfo />
+      </ExperienceTabs> */}
+      <FlashbackInfo />
     </>
   );
 }
