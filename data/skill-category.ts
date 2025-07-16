@@ -63,11 +63,11 @@ export const skillCategories = [
           icon: "🔗",
           description: "Web service architecture",
         },
-        {
-          name: "Microservices",
-          icon: "🏗️",
-          description: "Distributed system design",
-        },
+        // {
+        //   name: "Microservices",
+        //   icon: "🏗️",
+        //   description: "Distributed system design",
+        // },
       ],
     },
     {
