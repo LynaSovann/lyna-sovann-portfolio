@@ -2,6 +2,7 @@ pipeline {
     agent any
     
     environment {
+        GIT_CREDENTIALS_ID = 'github-credentials' // Configure in Jenkins
         DOCKER_REGISTRY = 'docker.io'
         DOCKER_REPO = 'lynakiddy/portfolio'
         DOCKER_CREDENTIALS_ID = 'docker-hub-credentials' 
@@ -111,7 +112,6 @@ pipeline {
                 }
             }
         }
-
         
         stage('Trigger ArgoCD Sync') {
             steps {
