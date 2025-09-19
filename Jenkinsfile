@@ -79,6 +79,59 @@ pipeline {
             }
         }
         
+        // stage('Update Application Manifest') {
+        //     steps {
+        //         script {
+        //             withCredentials([usernamePassword(credentialsId: "${GIT_CREDENTIALS_ID}", 
+        //                                             usernameVariable: 'GIT_USERNAME', 
+        //                                             passwordVariable: 'GIT_TOKEN')]) {
+        //                 sh '''
+        //                     # Clean up any existing directory
+        //                     rm -rf app-repo
+                            
+        //                     # Configure git
+        //                     git config --global user.name "Jenkins CI"
+        //                     git config --global user.email "jenkins@lynasovann.site"
+                            
+        //                     # Clone the application repository
+        //                     git clone https://${GIT_USERNAME}:${GIT_TOKEN}@github.com/LynaSovann/portfolio-app.git app-repo
+        //                     cd app-repo
+                            
+        //                     # Check which files exist and update accordingly
+        //                     if [ -f "values.yaml" ]; then
+        //                         echo "Updating values.yaml..."
+        //                         sed -i "s|tag: .*|tag: \\"${BUILD_TAG}\\"|g" values.yaml
+        //                         git add values.yaml
+        //                         FILE_UPDATED="values.yaml"
+        //                     elif [ -f "application.yaml" ]; then
+        //                         echo "Updating application.yaml..."
+        //                         sed -i "s|tag: .*|tag: \\"${BUILD_TAG}\\"|g" application.yaml
+        //                         git add application.yaml
+        //                         FILE_UPDATED="application.yaml"
+        //                     else
+        //                         echo "❌ Neither values.yaml nor application.yaml found"
+        //                         ls -la
+        //                         exit 1
+        //                     fi
+                            
+        //                     # Show the change
+        //                     echo "=== Updated ${FILE_UPDATED} ==="
+        //                     grep -A 2 -B 2 "tag:" ${FILE_UPDATED}
+                            
+        //                     # Commit and push
+        //                     if ! git diff --quiet ${FILE_UPDATED}; then
+        //                         git commit -m "Update image tag to ${BUILD_TAG} - Build #${BUILD_NUMBER}"
+        //                         git push origin main
+        //                         echo "✅ Successfully updated ${FILE_UPDATED} with tag: ${BUILD_TAG}"
+        //                     else
+        //                         echo "⚠️ No changes detected in ${FILE_UPDATED}"
+        //                     fi
+        //                 '''
+        //             }
+        //         }
+        //     }
+        // }
+
         stage('Update Application Manifest') {
             steps {
                 script {
@@ -97,40 +150,70 @@ pipeline {
                             git clone https://${GIT_USERNAME}:${GIT_TOKEN}@github.com/LynaSovann/portfolio-app.git app-repo
                             cd app-repo
                             
-                            # Check which files exist and update accordingly
+                            echo "📁 Repository contents:"
+                            ls -la
+                            
+                            # Determine which file to update
+                            FILE_TO_UPDATE=""
                             if [ -f "values.yaml" ]; then
-                                echo "Updating values.yaml..."
-                                sed -i "s|tag: .*|tag: \\"${BUILD_TAG}\\"|g" values.yaml
-                                git add values.yaml
-                                FILE_UPDATED="values.yaml"
+                                FILE_TO_UPDATE="values.yaml"
+                                echo "🎯 Found values.yaml - updating Helm values"
                             elif [ -f "application.yaml" ]; then
-                                echo "Updating application.yaml..."
-                                sed -i "s|tag: .*|tag: \\"${BUILD_TAG}\\"|g" application.yaml
-                                git add application.yaml
-                                FILE_UPDATED="application.yaml"
+                                FILE_TO_UPDATE="application.yaml" 
+                                echo "🎯 Found application.yaml - updating ArgoCD application"
+                            elif [ -f "k8s/deployment.yaml" ]; then
+                                FILE_TO_UPDATE="k8s/deployment.yaml"
+                                echo "🎯 Found k8s/deployment.yaml - updating Kubernetes deployment"
+                            elif find . -name "*.yaml" -exec grep -l "lynakiddy/portfolio" {} \\; | head -1 | read FOUND_FILE; then
+                                FILE_TO_UPDATE="$FOUND_FILE"
+                                echo "🎯 Found file with image reference: $FILE_TO_UPDATE"
                             else
-                                echo "❌ Neither values.yaml nor application.yaml found"
-                                ls -la
+                                echo "❌ Could not find any YAML file to update"
+                                echo "Available files:"
+                                find . -name "*.yaml" -o -name "*.yml"
                                 exit 1
                             fi
                             
-                            # Show the change
-                            echo "=== Updated ${FILE_UPDATED} ==="
-                            grep -A 2 -B 2 "tag:" ${FILE_UPDATED}
+                            # Show current content
+                            echo "=== Current content in ${FILE_TO_UPDATE} ==="
+                            grep -A 3 -B 3 "lynakiddy/portfolio\\|tag:" ${FILE_TO_UPDATE} || echo "No matching lines found"
                             
-                            # Commit and push
-                            if ! git diff --quiet ${FILE_UPDATED}; then
-                                git commit -m "Update image tag to ${BUILD_TAG} - Build #${BUILD_NUMBER}"
-                                git push origin main
-                                echo "✅ Successfully updated ${FILE_UPDATED} with tag: ${BUILD_TAG}"
-                            else
-                                echo "⚠️ No changes detected in ${FILE_UPDATED}"
+                            # Update the image tag - try multiple patterns
+                            echo "🔄 Updating image tag to: ${BUILD_TAG}"
+                            
+                            # Pattern 1: tag: "value" or tag: value
+                            sed -i "s|tag: [\"']*[^\"']*[\"']*|tag: \\"${BUILD_TAG}\\"|g" ${FILE_TO_UPDATE}
+                            
+                            # Pattern 2: image: lynakiddy/portfolio:tag
+                            sed -i "s|lynakiddy/portfolio:[^[:space:]]*|lynakiddy/portfolio:${BUILD_TAG}|g" ${FILE_TO_UPDATE}
+                            
+                            # Pattern 3: In case it's in a Helm values block
+                            sed -i "/image:/,/tag:/ s|tag: [\"']*[^\"']*[\"']*|tag: \\"${BUILD_TAG}\\"|" ${FILE_TO_UPDATE}
+                            
+                            # Show updated content
+                            echo "=== Updated content in ${FILE_TO_UPDATE} ==="
+                            grep -A 3 -B 3 "lynakiddy/portfolio\\|tag:" ${FILE_TO_UPDATE}
+                            
+                            # Check if there are any changes to commit
+                            if git diff --quiet ${FILE_TO_UPDATE}; then
+                                echo "⚠️  No changes detected in ${FILE_TO_UPDATE}"
+                                echo "Current tag might already be ${BUILD_TAG} or pattern didn't match"
+                                echo "Manual verification needed!"
+                                exit 0
                             fi
+                            
+                            # Commit and push changes
+                            git add ${FILE_TO_UPDATE}
+                            git commit -m "🚀 Update image tag to ${BUILD_TAG} - Build #${BUILD_NUMBER}"
+                            git push origin main
+                            
+                            echo "✅ Successfully updated ${FILE_TO_UPDATE} with tag: ${BUILD_TAG}"
                         '''
                     }
                 }
             }
         }
+
         
         stage('Trigger ArgoCD Sync') {
             steps {
