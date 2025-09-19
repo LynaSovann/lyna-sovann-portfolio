@@ -153,61 +153,56 @@ pipeline {
                             echo "📁 Repository contents:"
                             ls -la
                             
-                            # Determine which file to update
-                            FILE_TO_UPDATE=""
-                            if [ -f "values.yaml" ]; then
-                                FILE_TO_UPDATE="values.yaml"
-                                echo "🎯 Found values.yaml - updating Helm values"
-                            elif [ -f "application.yaml" ]; then
-                                FILE_TO_UPDATE="application.yaml" 
-                                echo "🎯 Found application.yaml - updating ArgoCD application"
-                            elif [ -f "k8s/deployment.yaml" ]; then
-                                FILE_TO_UPDATE="k8s/deployment.yaml"
-                                echo "🎯 Found k8s/deployment.yaml - updating Kubernetes deployment"
-                            elif find . -name "*.yaml" -exec grep -l "lynakiddy/portfolio" {} \\; | head -1 | read FOUND_FILE; then
-                                FILE_TO_UPDATE="$FOUND_FILE"
-                                echo "🎯 Found file with image reference: $FILE_TO_UPDATE"
-                            else
-                                echo "❌ Could not find any YAML file to update"
-                                echo "Available files:"
-                                find . -name "*.yaml" -o -name "*.yml"
+                            # Check if k8s directory and deployment.yaml exist
+                            if [ ! -d "k8s" ]; then
+                                echo "❌ Error: k8s directory not found"
+                                echo "Available directories:"
+                                ls -la
                                 exit 1
                             fi
                             
-                            # Show current content
-                            echo "=== Current content in ${FILE_TO_UPDATE} ==="
-                            grep -A 3 -B 3 "lynakiddy/portfolio\\|tag:" ${FILE_TO_UPDATE} || echo "No matching lines found"
+                            if [ ! -f "k8s/deployment.yaml" ]; then
+                                echo "❌ Error: k8s/deployment.yaml not found"
+                                echo "Files in k8s directory:"
+                                ls -la k8s/
+                                exit 1
+                            fi
                             
-                            # Update the image tag - try multiple patterns
-                            echo "🔄 Updating image tag to: ${BUILD_TAG}"
+                            echo "🎯 Found k8s/deployment.yaml - updating Kubernetes deployment"
                             
-                            # Pattern 1: tag: "value" or tag: value
-                            sed -i "s|tag: [\"']*[^\"']*[\"']*|tag: \\"${BUILD_TAG}\\"|g" ${FILE_TO_UPDATE}
+                            # Show current image tag
+                            echo "=== Current image in k8s/deployment.yaml ==="
+                            grep -A 2 -B 2 "image: lynakiddy/portfolio" k8s/deployment.yaml
                             
-                            # Pattern 2: image: lynakiddy/portfolio:tag
-                            sed -i "s|lynakiddy/portfolio:[^[:space:]]*|lynakiddy/portfolio:${BUILD_TAG}|g" ${FILE_TO_UPDATE}
+                            # Update the image tag in deployment.yaml
+                            echo "🔄 Updating image from lynakiddy/portfolio:latest to lynakiddy/portfolio:${BUILD_TAG}"
                             
-                            # Pattern 3: In case it's in a Helm values block
-                            sed -i "/image:/,/tag:/ s|tag: [\"']*[^\"']*[\"']*|tag: \\"${BUILD_TAG}\\"|" ${FILE_TO_UPDATE}
+                            # Update the specific image line
+                            sed -i "s|image: lynakiddy/portfolio:.*|image: lynakiddy/portfolio:${BUILD_TAG}|g" k8s/deployment.yaml
                             
-                            # Show updated content
-                            echo "=== Updated content in ${FILE_TO_UPDATE} ==="
-                            grep -A 3 -B 3 "lynakiddy/portfolio\\|tag:" ${FILE_TO_UPDATE}
+                            # Verify the change was made
+                            echo "=== Updated image in k8s/deployment.yaml ==="
+                            grep -A 2 -B 2 "image: lynakiddy/portfolio" k8s/deployment.yaml
                             
                             # Check if there are any changes to commit
-                            if git diff --quiet ${FILE_TO_UPDATE}; then
-                                echo "⚠️  No changes detected in ${FILE_TO_UPDATE}"
-                                echo "Current tag might already be ${BUILD_TAG} or pattern didn't match"
-                                echo "Manual verification needed!"
+                            if git diff --quiet k8s/deployment.yaml; then
+                                echo "⚠️  No changes detected in k8s/deployment.yaml"
+                                echo "Current tag might already be ${BUILD_TAG}"
+                                echo "Current deployment.yaml content:"
+                                cat k8s/deployment.yaml
                                 exit 0
                             fi
                             
+                            # Show the git diff
+                            echo "=== Git diff ==="
+                            git diff k8s/deployment.yaml
+                            
                             # Commit and push changes
-                            git add ${FILE_TO_UPDATE}
-                            git commit -m "🚀 Update image tag to ${BUILD_TAG} - Build #${BUILD_NUMBER}"
+                            git add k8s/deployment.yaml
+                            git commit -m "🚀 Update deployment image to lynakiddy/portfolio:${BUILD_TAG} - Build #${BUILD_NUMBER}"
                             git push origin main
                             
-                            echo "✅ Successfully updated ${FILE_TO_UPDATE} with tag: ${BUILD_TAG}"
+                            echo "✅ Successfully updated k8s/deployment.yaml with image: lynakiddy/portfolio:${BUILD_TAG}"
                         '''
                     }
                 }
