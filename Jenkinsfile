@@ -4,8 +4,8 @@ pipeline {
     environment {
         DOCKER_REGISTRY = 'docker.io'
         DOCKER_REPO = 'lynakiddy/portfolio'
-        DOCKER_CREDENTIALS_ID = 'docker-hub-credentials' // Configure in Jenkins
-        ARGOCD_SERVER = 'your-argocd-server.com' // Replace with your ArgoCD server
+        DOCKER_CREDENTIALS_ID = 'docker-hub-credentials' 
+        ARGOCD_SERVER = 'argocd.lynasovann.site' // Replace with your ArgoCD server
         ARGOCD_CREDENTIALS_ID = 'argocd-credentials' // Configure in Jenkins
         APP_NAME = 'my-portfolio'
         ARGOCD_NAMESPACE = 'argocd'
