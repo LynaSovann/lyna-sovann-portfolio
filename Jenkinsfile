@@ -52,11 +52,28 @@ pipeline {
         stage('Push to Docker Hub') {
             steps {
                 script {
-                    docker.withRegistry("https://${DOCKER_REGISTRY}", "${DOCKER_CREDENTIALS_ID}") {
-                        dockerImage.push("${BUILD_TAG}")
-                        dockerImage.push("latest")
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', 
+                                                    usernameVariable: 'DOCKER_USERNAME', 
+                                                    passwordVariable: 'DOCKER_TOKEN')]) {
+                        sh '''
+                            # Login with explicit registry
+                            echo "$DOCKER_TOKEN" | docker login docker.io -u "$DOCKER_USERNAME" --password-stdin
+                            
+                            # Verify login worked
+                            docker info | grep -i username || echo "Login verification failed"
+                            
+                            # Tag images properly
+                            docker tag lynakiddy/portfolio:${BUILD_TAG} docker.io/lynakiddy/portfolio:${BUILD_TAG}
+                            docker tag lynakiddy/portfolio:latest docker.io/lynakiddy/portfolio:latest
+                            
+                            # Push with explicit registry
+                            docker push docker.io/lynakiddy/portfolio:${BUILD_TAG}
+                            docker push docker.io/lynakiddy/portfolio:latest
+                            
+                            # Logout
+                            docker logout docker.io
+                        '''
                     }
-                    echo "Successfully pushed ${DOCKER_REPO}:${BUILD_TAG} to Docker Hub"
                 }
             }
         }
