@@ -111,6 +111,7 @@ pipeline {
                 }
             }
         }
+
         
         stage('Trigger ArgoCD Sync') {
             steps {
@@ -142,7 +143,7 @@ pipeline {
                 }
             }
         }
-    }
+
     }
     
     post {
