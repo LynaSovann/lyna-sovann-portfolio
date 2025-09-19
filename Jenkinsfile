@@ -81,26 +81,52 @@ pipeline {
         
         stage('Update Application Manifest') {
             steps {
-                // Use a clean workspace
-                dir('git-workspace') {
-                    deleteDir() // Clean the directory
-                    script {
-                        withCredentials([usernamePassword(credentialsId: "${GIT_CREDENTIALS_ID}", 
-                                                        usernameVariable: 'GIT_USERNAME', 
-                                                        passwordVariable: 'GIT_TOKEN')]) {
-                            sh '''
-                                git config --global user.name "Jenkins CI"
-                                git config --global user.email "jenkins@lynasovann.site"
-                                
-                                git clone https://${GIT_USERNAME}:${GIT_TOKEN}@github.com/LynaSovann/portfolio-app.git .
-                                
+                script {
+                    withCredentials([usernamePassword(credentialsId: "${GIT_CREDENTIALS_ID}", 
+                                                    usernameVariable: 'GIT_USERNAME', 
+                                                    passwordVariable: 'GIT_TOKEN')]) {
+                        sh '''
+                            # Clean up any existing directory
+                            rm -rf app-repo
+                            
+                            # Configure git
+                            git config --global user.name "Jenkins CI"
+                            git config --global user.email "jenkins@lynasovann.site"
+                            
+                            # Clone the application repository
+                            git clone https://${GIT_USERNAME}:${GIT_TOKEN}@github.com/LynaSovann/portfolio-app.git app-repo
+                            cd app-repo
+                            
+                            # Check which files exist and update accordingly
+                            if [ -f "values.yaml" ]; then
+                                echo "Updating values.yaml..."
+                                sed -i "s|tag: .*|tag: \\"${BUILD_TAG}\\"|g" values.yaml
+                                git add values.yaml
+                                FILE_UPDATED="values.yaml"
+                            elif [ -f "application.yaml" ]; then
+                                echo "Updating application.yaml..."
                                 sed -i "s|tag: .*|tag: \\"${BUILD_TAG}\\"|g" application.yaml
-                                
                                 git add application.yaml
+                                FILE_UPDATED="application.yaml"
+                            else
+                                echo "❌ Neither values.yaml nor application.yaml found"
+                                ls -la
+                                exit 1
+                            fi
+                            
+                            # Show the change
+                            echo "=== Updated ${FILE_UPDATED} ==="
+                            grep -A 2 -B 2 "tag:" ${FILE_UPDATED}
+                            
+                            # Commit and push
+                            if ! git diff --quiet ${FILE_UPDATED}; then
                                 git commit -m "Update image tag to ${BUILD_TAG} - Build #${BUILD_NUMBER}"
                                 git push origin main
-                            '''
-                        }
+                                echo "✅ Successfully updated ${FILE_UPDATED} with tag: ${BUILD_TAG}"
+                            else
+                                echo "⚠️ No changes detected in ${FILE_UPDATED}"
+                            fi
+                        '''
                     }
                 }
             }
