@@ -81,33 +81,26 @@ pipeline {
         
         stage('Update Application Manifest') {
             steps {
-                script {
-                    withCredentials([usernamePassword(credentialsId: "${GIT_CREDENTIALS_ID}", 
-                                                    usernameVariable: 'GIT_USERNAME', 
-                                                    passwordVariable: 'GIT_TOKEN')]) {
-                        sh '''
-                            # Configure git
-                            git config --global user.name "Jenkins CI"
-                            git config --global user.email "jenkins@lynasovann.site"
-                            
-                            # Clone the application repository
-                            git clone https://${GIT_USERNAME}:${GIT_TOKEN}@github.com/LynaSovann/portfolio-app.git app-repo
-                            cd app-repo
-                            
-                            # Update the image tag in application.yaml
-                            sed -i "s|tag: .*|tag: \\"${BUILD_TAG}\\"|g" application.yaml
-                            
-                            # Verify the change
-                            echo "=== Updated application.yaml ==="
-                            grep -A 5 -B 5 "tag:" application.yaml
-                            
-                            # Commit and push changes
-                            git add application.yaml
-                            git commit -m "Update image tag to ${BUILD_TAG} - Build #${BUILD_NUMBER}"
-                            git push origin main
-                            
-                            echo "Successfully updated application.yaml with tag: ${BUILD_TAG}"
-                        '''
+                // Use a clean workspace
+                dir('git-workspace') {
+                    deleteDir() // Clean the directory
+                    script {
+                        withCredentials([usernamePassword(credentialsId: "${GIT_CREDENTIALS_ID}", 
+                                                        usernameVariable: 'GIT_USERNAME', 
+                                                        passwordVariable: 'GIT_TOKEN')]) {
+                            sh '''
+                                git config --global user.name "Jenkins CI"
+                                git config --global user.email "jenkins@lynasovann.site"
+                                
+                                git clone https://${GIT_USERNAME}:${GIT_TOKEN}@github.com/LynaSovann/portfolio-app.git .
+                                
+                                sed -i "s|tag: .*|tag: \\"${BUILD_TAG}\\"|g" application.yaml
+                                
+                                git add application.yaml
+                                git commit -m "Update image tag to ${BUILD_TAG} - Build #${BUILD_NUMBER}"
+                                git push origin main
+                            '''
+                        }
                     }
                 }
             }
