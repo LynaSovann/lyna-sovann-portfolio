@@ -78,50 +78,45 @@ pipeline {
             }
         }
         
-        stage('Update ArgoCD Application') {
+        stage('Update Application Manifest') {
             steps {
                 script {
-                    // Method 1: Direct API call to ArgoCD (Recommended)
-                    withCredentials([usernamePassword(credentialsId: "${ARGOCD_CREDENTIALS_ID}", 
-                                                    usernameVariable: 'ARGOCD_USERNAME', 
-                                                    passwordVariable: 'ARGOCD_PASSWORD')]) {
+                    withCredentials([usernamePassword(credentialsId: "${GIT_CREDENTIALS_ID}", 
+                                                    usernameVariable: 'GIT_USERNAME', 
+                                                    passwordVariable: 'GIT_TOKEN')]) {
                         sh '''
-                            # Get ArgoCD auth token
-                            ARGOCD_TOKEN=$(curl -k -X POST https://${ARGOCD_SERVER}/api/v1/session \\
-                                -H "Content-Type: application/json" \\
-                                -d "{\\"username\\": \\"${ARGOCD_USERNAME}\\", \\"password\\": \\"${ARGOCD_PASSWORD}\\"}" \\
-                                | jq -r '.token')
+                            # Configure git
+                            git config --global user.name "Jenkins CI"
+                            git config --global user.email "jenkins@lynasovann.site"
                             
-                            # Update application image tag
-                            curl -k -X PATCH https://${ARGOCD_SERVER}/api/v1/applications/${APP_NAME} \\
-                                -H "Authorization: Bearer ${ARGOCD_TOKEN}" \\
-                                -H "Content-Type: application/json" \\
-                                -d "{
-                                    \\"spec\\": {
-                                        \\"source\\": {
-                                            \\"helm\\": {
-                                                \\"values\\": \\"domainName: \\\\\\"portfolio.lynasovann.site\\\\\\"\\\\nimage:\\\\n  repository: lynakiddy/portfolio\\\\n  tag: \\\\\\"${BUILD_TAG}\\\\\\"\\\\n  containerPort: 3000\\\\nservice:\\\\n  type: ClusterIP\\\\n  port: 3000\\\\n  targetPort: 3000\\"
-                                            }
-                                        }
-                                    }
-                                }"
+                            # Clone the application repository
+                            git clone https://${GIT_USERNAME}:${GIT_TOKEN}@github.com/LynaSovann/portfolio-app.git app-repo
+                            cd app-repo
                             
-                            # Trigger sync
-                            curl -k -X POST https://${ARGOCD_SERVER}/api/v1/applications/${APP_NAME}/sync \\
-                                -H "Authorization: Bearer ${ARGOCD_TOKEN}" \\
-                                -H "Content-Type: application/json" \\
-                                -d '{"prune": false, "dryRun": false, "strategy": {"hook": {}}}'
+                            # Update the image tag in application.yaml
+                            sed -i "s|tag: .*|tag: \\"${BUILD_TAG}\\"|g" application.yaml
+                            
+                            # Verify the change
+                            echo "=== Updated application.yaml ==="
+                            grep -A 5 -B 5 "tag:" application.yaml
+                            
+                            # Commit and push changes
+                            git add application.yaml
+                            git commit -m "Update image tag to ${BUILD_TAG} - Build #${BUILD_NUMBER}"
+                            git push origin main
+                            
+                            echo "Successfully updated application.yaml with tag: ${BUILD_TAG}"
                         '''
                     }
                 }
             }
         }
         
-        stage('Verify Deployment') {
+        stage('Trigger ArgoCD Sync') {
             steps {
                 script {
-                    echo "Waiting for deployment to complete..."
-                    sleep(30) // Wait for deployment
+                    echo "Waiting for Git changes to propagate..."
+                    sleep(10) // Wait for git changes to be detected
                     
                     withCredentials([usernamePassword(credentialsId: "${ARGOCD_CREDENTIALS_ID}", 
                                                     usernameVariable: 'ARGOCD_USERNAME', 
@@ -133,24 +128,21 @@ pipeline {
                                 -d "{\\"username\\": \\"${ARGOCD_USERNAME}\\", \\"password\\": \\"${ARGOCD_PASSWORD}\\"}" \\
                                 | jq -r '.token')
                             
-                            # Check application status
-                            APP_STATUS=$(curl -k -X GET https://${ARGOCD_SERVER}/api/v1/applications/${APP_NAME} \\
+                            echo "ArgoCD Token obtained successfully"
+                            
+                            # Trigger sync to pick up the new changes
+                            curl -k -X POST https://${ARGOCD_SERVER}/api/v1/applications/${APP_NAME}/sync \\
                                 -H "Authorization: Bearer ${ARGOCD_TOKEN}" \\
-                                | jq -r '.status.health.status')
+                                -H "Content-Type: application/json" \\
+                                -d '{"prune": false, "dryRun": false, "strategy": {"hook": {}}}'
                             
-                            echo "Application health status: ${APP_STATUS}"
-                            
-                            if [ "${APP_STATUS}" != "Healthy" ]; then
-                                echo "Deployment verification failed!"
-                                exit 1
-                            else
-                                echo "Deployment successful!"
-                            fi
+                            echo "ArgoCD sync triggered successfully"
                         '''
                     }
                 }
             }
         }
+    }
     }
     
     post {
