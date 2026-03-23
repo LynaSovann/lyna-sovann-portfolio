@@ -1,0 +1,587 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vision — Sovann Lyna</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Syne:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --bg: #0b0c10;
+        --bg2: #0f1117;
+        --surface: #161820;
+        --border: #252730;
+        --accent: #7df9ac;
+        --accent2: #5bc0eb;
+        --text: #e8eaf0;
+        --muted: #6b7280;
+        --mono: "JetBrains Mono", monospace;
+        --sans: "Syne", sans-serif;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--mono);
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      }
+
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.25rem 2.5rem;
+        background: rgba(11, 12, 16, 0.85);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-logo {
+        font-family: var(--sans);
+        font-weight: 800;
+        font-size: 1.1rem;
+        color: var(--accent);
+        letter-spacing: -0.02em;
+        text-decoration: none;
+      }
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+      }
+      .nav-links a {
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: var(--accent);
+      }
+
+      /* PAGE HEADER */
+      .page-header {
+        position: relative;
+        z-index: 1;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 9rem 2.5rem 3rem;
+      }
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-bottom: 3rem;
+        transition: color 0.2s;
+      }
+      .back-link:hover {
+        color: var(--accent);
+      }
+      .back-link svg {
+        width: 12px;
+        height: 12px;
+      }
+      .section-label {
+        font-size: 0.7rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 1rem;
+      }
+      .page-header h1 {
+        font-family: var(--sans);
+        font-weight: 800;
+        font-size: clamp(2.5rem, 6vw, 4.5rem);
+        letter-spacing: -0.04em;
+        line-height: 1;
+        margin-bottom: 1rem;
+      }
+      .page-header .sub {
+        color: var(--muted);
+        font-size: 0.88rem;
+        line-height: 1.7;
+        max-width: 560px;
+      }
+
+      /* VISION BODY */
+      .vision-body {
+        position: relative;
+        z-index: 1;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 3rem 2.5rem 6rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        align-items: start;
+      }
+
+      /* ── NORTH STAR ── */
+      .north-star {
+        grid-column: 1 / -1;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-left: 3px solid var(--accent);
+        border-radius: 6px;
+        padding: 2rem 2.25rem;
+        display: flex;
+        align-items: flex-start;
+        gap: 1.5rem;
+      }
+      .star-icon {
+        font-size: 2rem;
+        line-height: 1;
+        flex-shrink: 0;
+        margin-top: 0.15rem;
+      }
+      .star-label {
+        font-size: 0.65rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 0.5rem;
+      }
+      .star-title {
+        font-family: var(--sans);
+        font-weight: 700;
+        font-size: 1.4rem;
+        letter-spacing: -0.02em;
+        margin-bottom: 0.6rem;
+      }
+      .star-desc {
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.8;
+      }
+
+      /* ── ROADMAP ── */
+      .roadmap {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+      .roadmap-heading {
+        font-size: 0.65rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 1.25rem;
+      }
+
+      .roadmap-item {
+        display: flex;
+        gap: 1rem;
+        position: relative;
+      }
+      .roadmap-item:not(:last-child) {
+        padding-bottom: 0;
+      }
+
+      .rm-spine {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 24px;
+        flex-shrink: 0;
+      }
+      .rm-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        border: 2px solid var(--border);
+        background: var(--bg);
+        margin-top: 0.3rem;
+        transition: border-color 0.2s;
+      }
+      .rm-dot.done {
+        background: var(--accent);
+        border-color: var(--accent);
+      }
+      .rm-dot.now {
+        background: transparent;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(125, 249, 172, 0.15);
+      }
+      .rm-dot.soon {
+        background: transparent;
+        border-color: var(--accent2);
+      }
+      .rm-dot.later {
+        background: transparent;
+        border-color: var(--border);
+      }
+      .rm-line {
+        width: 1px;
+        flex: 1;
+        background: var(--border);
+        margin: 3px 0;
+        min-height: 24px;
+      }
+
+      .rm-content {
+        padding-bottom: 1.75rem;
+        flex: 1;
+      }
+      .rm-status {
+        display: inline-block;
+        font-size: 0.6rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        padding: 0.18rem 0.55rem;
+        border-radius: 2px;
+        margin-bottom: 0.4rem;
+        font-weight: 700;
+      }
+      .status-done {
+        background: rgba(125, 249, 172, 0.1);
+        color: var(--accent);
+      }
+      .status-now {
+        background: rgba(125, 249, 172, 0.15);
+        color: var(--accent);
+      }
+      .status-soon {
+        background: rgba(91, 192, 235, 0.1);
+        color: var(--accent2);
+      }
+      .status-later {
+        background: rgba(107, 114, 128, 0.1);
+        color: var(--muted);
+      }
+      .rm-title {
+        font-family: var(--sans);
+        font-weight: 700;
+        font-size: 0.95rem;
+        letter-spacing: -0.01em;
+        margin-bottom: 0.35rem;
+      }
+      .rm-desc {
+        font-size: 0.76rem;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+      .rm-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.35rem;
+        margin-top: 0.6rem;
+      }
+      .rm-tag {
+        padding: 0.2rem 0.55rem;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 2px;
+        font-size: 0.62rem;
+        color: var(--muted);
+      }
+
+      /* ── VALUES ── */
+      .values-col {
+      }
+      .values-heading {
+        font-size: 0.65rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 1.25rem;
+      }
+      .values-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        overflow: hidden;
+      }
+      .value-item {
+        padding: 1.2rem 1.5rem;
+        background: var(--surface);
+      }
+      .value-emoji {
+        font-size: 1.2rem;
+        margin-bottom: 0.4rem;
+      }
+      .value-title {
+        font-family: var(--sans);
+        font-weight: 700;
+        font-size: 0.9rem;
+        margin-bottom: 0.3rem;
+      }
+      .value-desc {
+        font-size: 0.75rem;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      footer {
+        position: relative;
+        z-index: 1;
+        border-top: 1px solid var(--border);
+        padding: 2rem 2.5rem;
+      }
+      .footer-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: var(--muted);
+        font-size: 0.72rem;
+      }
+      .footer-sig {
+        color: var(--accent);
+        font-weight: 600;
+      }
+
+      @media (max-width: 800px) {
+        nav {
+          padding: 1rem 1.25rem;
+        }
+        .nav-links {
+          gap: 1rem;
+        }
+        .page-header {
+          padding: 7rem 1.25rem 2.5rem;
+        }
+        .vision-body {
+          grid-template-columns: 1fr;
+          padding: 2rem 1.25rem 4rem;
+          gap: 2.5rem;
+        }
+        .north-star {
+          flex-direction: column;
+          gap: 0.75rem;
+        }
+        footer {
+          padding: 1.5rem 1.25rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="index.html" class="nav-logo">SL/</a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="vision.html" class="active">Vision</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </nav>
+
+    <div class="page-header">
+      <a href="index.html" class="back-link">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+        >
+          <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+        Back to home
+      </a>
+      <div class="section-label">// Vision</div>
+      <h1>Where I'm Headed</h1>
+      <p class="sub">
+        I don't just want to ship infrastructure — I want to build it securely,
+        reliably, and with intention. Here's the direction I'm growing toward.
+      </p>
+    </div>
+
+    <div class="vision-body">
+      <!-- NORTH STAR -->
+      <!-- <div class="north-star">
+        <div class="star-icon">🎯</div>
+        <div>
+          <div class="star-label">// North Star Goal</div>
+          <div class="star-title">Become a DevSecOps Engineer</div>
+          <div class="star-desc">
+            My goal is to grow from DevOps into DevSecOps — where security isn't
+            bolted on at the end, but woven into every pipeline, container, and
+            cloud resource from day one. I want to be the kind of engineer who
+            makes teams ship faster <em>and</em> safer at the same time.
+          </div>
+        </div>
+      </div> -->
+
+      <!-- ROADMAP -->
+      <div class="roadmap">
+        <div class="roadmap-heading">// Learning Roadmap</div>
+
+        <div class="roadmap-item">
+          <div class="rm-spine">
+            <div class="rm-dot done"></div>
+            <div class="rm-line"></div>
+          </div>
+          <div class="rm-content">
+            <span class="rm-status status-done">Completed</span>
+            <div class="rm-title">DevOps Foundations</div>
+            <div class="rm-desc">
+              On-prem infra, AWS, Docker, CI/CD, Linux — the core toolkit that
+              lets me build and deploy reliably.
+            </div>
+            <div class="rm-tags">
+              <span class="rm-tag">Vagrant</span
+              ><span class="rm-tag">AWS EC2</span>
+              <span class="rm-tag">Docker</span
+              ><span class="rm-tag">Jenkins</span
+              ><span class="rm-tag">Terraform</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="roadmap-item">
+          <div class="rm-spine">
+            <div class="rm-dot now"></div>
+            <div class="rm-line"></div>
+          </div>
+          <div class="rm-content">
+            <span class="rm-status status-now">In Progress</span>
+            <div class="rm-title">Security in the Pipeline</div>
+            <div class="rm-desc">
+              Learning to shift security left — integrating image scanning,
+              secret management, and SAST/DAST into CI/CD workflows.
+            </div>
+            <div class="rm-tags">
+              <span class="rm-tag">Trivy</span><span class="rm-tag">OWASP</span>
+              <span class="rm-tag">Vault</span
+              ><span class="rm-tag">GitHub Secret Scanning</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="roadmap-item">
+          <div class="rm-spine">
+            <div class="rm-dot soon"></div>
+            <div class="rm-line"></div>
+          </div>
+          <div class="rm-content">
+            <span class="rm-status status-soon">Up Next</span>
+            <div class="rm-title">Cloud Security &amp; Compliance</div>
+            <div class="rm-desc">
+              Diving into AWS security services, IAM hardening, VPC best
+              practices, and infrastructure compliance tooling like tfsec and
+              Checkov.
+            </div>
+            <div class="rm-tags">
+              <span class="rm-tag">AWS GuardDuty</span
+              ><span class="rm-tag">IAM</span>
+              <span class="rm-tag">Checkov</span
+              ><span class="rm-tag">tfsec</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="roadmap-item">
+          <div class="rm-spine">
+            <div class="rm-dot later"></div>
+            <div class="rm-line"></div>
+          </div>
+          <div class="rm-content">
+            <span class="rm-status status-later">Planned</span>
+            <div class="rm-title">Kubernetes &amp; Runtime Security</div>
+            <div class="rm-desc">
+              Moving into container orchestration security — RBAC, network
+              policies, Falco for runtime threat detection, and securing K8s
+              clusters end-to-end.
+            </div>
+            <div class="rm-tags">
+              <span class="rm-tag">Kubernetes</span
+              ><span class="rm-tag">Falco</span>
+              <span class="rm-tag">OPA / Gatekeeper</span
+              ><span class="rm-tag">RBAC</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="roadmap-item">
+          <div class="rm-spine"><div class="rm-dot later"></div></div>
+          <div class="rm-content">
+            <span class="rm-status status-later">Future</span>
+            <div class="rm-title">DevSecOps Engineer</div>
+            <div class="rm-desc">
+              Owning security end-to-end — from code commit to production
+              runtime — and helping teams build a culture of "secure by
+              default".
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VALUES -->
+      <div class="values-col">
+        <div class="values-heading">// What Drives Me</div>
+        <div class="values-list">
+          <div class="value-item">
+            <div class="value-emoji">🔒</div>
+            <div class="value-title">Security as a first-class citizen</div>
+            <div class="value-desc">
+              Security shouldn't slow teams down — it should be invisible,
+              automated, and built into the workflow from the start.
+            </div>
+          </div>
+          <div class="value-item">
+            <div class="value-emoji">⚙️</div>
+            <div class="value-title">Automate everything repeatable</div>
+            <div class="value-desc">
+              If a human has to do it twice, it should be a script. If a script
+              runs twice, it should be a pipeline.
+            </div>
+          </div>
+          <!-- <div class="value-item">
+        <div class="value-emoji">📖</div>
+        <div class="value-title">Always learning in public</div>
+        <div class="value-desc">Every project I push to GitHub is a step on the learning path. Growth happens by building, breaking, and rebuilding.</div>
+      </div>
+      <div class="value-item">
+        <div class="value-emoji">🌏</div>
+        <div class="value-title">Bringing it back to Cambodia</div>
+        <div class="value-desc">I want to help grow the DevOps and security engineering community here in Phnom Penh — sharing what I learn along the way.</div>
+      </div> -->
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="footer-inner">
+        <span class="footer-sig">Sovann Lyna</span>
+        <span>DevOps Engineer · Phnom Penh · <span id="yr"></span></span>
+      </div>
+    </footer>
+    <script>
+      document.getElementById("yr").textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>

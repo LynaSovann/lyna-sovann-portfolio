@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projects — Sovann Lyna</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Syne:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg: #0b0c10;
+        --bg2: #0f1117;
+        --surface: #161820;
+        --border: #252730;
+        --accent: #7df9ac;
+        --accent2: #5bc0eb;
+        --text: #e8eaf0;
+        --muted: #6b7280;
+        --mono: "JetBrains Mono", monospace;
+        --sans: "Syne", sans-serif;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--mono);
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      /* ─── NAV ─── */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.25rem 2.5rem;
+        background: rgba(11, 12, 16, 0.85);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav-logo {
+        font-family: var(--sans);
+        font-weight: 800;
+        font-size: 1.1rem;
+        color: var(--accent);
+        letter-spacing: -0.02em;
+        text-decoration: none;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+      }
+      .nav-links a {
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: var(--accent);
+      }
+
+      /* ─── PAGE HEADER ─── */
+      .page-header {
+        position: relative;
+        z-index: 1;
+        padding: 9rem 2.5rem 4rem;
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-bottom: 2.5rem;
+        transition: color 0.2s;
+      }
+      .back-link:hover {
+        color: var(--accent);
+      }
+      .back-link svg {
+        width: 12px;
+        height: 12px;
+      }
+
+      .section-label {
+        font-size: 0.7rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 1rem;
+      }
+
+      .page-header h1 {
+        font-family: var(--sans);
+        font-weight: 800;
+        font-size: clamp(2.5rem, 6vw, 4.5rem);
+        letter-spacing: -0.04em;
+        line-height: 1;
+        margin-bottom: 1rem;
+      }
+
+      .page-header .sub {
+        color: var(--muted);
+        font-size: 0.88rem;
+        max-width: 480px;
+        line-height: 1.7;
+      }
+
+      /* ─── FILTER BAR ─── */
+      .filter-bar {
+        position: relative;
+        z-index: 1;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 2.5rem 2.5rem;
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+
+      .filter-btn {
+        padding: 0.4rem 1rem;
+        border: 1px solid var(--border);
+        background: transparent;
+        color: var(--muted);
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        border-radius: 3px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .filter-btn:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      .filter-btn.active {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #0b0c10;
+        font-weight: 700;
+      }
+
+      /* ─── PROJECTS GRID ─── */
+      .projects-wrap {
+        position: relative;
+        z-index: 1;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 2.5rem 6rem;
+      }
+
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        overflow: hidden;
+      }
+
+      .project-card {
+        display: flex;
+        flex-direction: column;
+        background: var(--surface);
+        padding: 2rem;
+        text-decoration: none;
+        color: inherit;
+        transition: background 0.2s;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .project-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 3px;
+        height: 0;
+        background: var(--accent);
+        transition: height 0.3s ease;
+      }
+
+      .project-card:hover {
+        background: var(--bg2);
+      }
+      .project-card:hover::before {
+        height: 100%;
+      }
+      .project-card:hover .project-arrow {
+        transform: translate(3px, -3px);
+        opacity: 1;
+      }
+
+      .project-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        margin-bottom: 1.25rem;
+      }
+
+      .project-type {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.65rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        padding: 0.3rem 0.7rem;
+        border-radius: 2px;
+        font-weight: 600;
+      }
+
+      .type-onprem {
+        background: rgba(125, 249, 172, 0.08);
+        color: var(--accent);
+      }
+      .type-cloud {
+        background: rgba(91, 192, 235, 0.08);
+        color: var(--accent2);
+      }
+      .type-cicd {
+        background: rgba(252, 196, 25, 0.08);
+        color: #fcc419;
+      }
+      .type-container {
+        background: rgba(248, 114, 114, 0.08);
+        color: #f87272;
+      }
+
+      .project-type svg {
+        width: 7px;
+        height: 7px;
+      }
+
+      .project-arrow {
+        color: var(--muted);
+        opacity: 0.4;
+        transition:
+          transform 0.2s,
+          opacity 0.2s;
+        flex-shrink: 0;
+      }
+      .project-arrow svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      .project-num {
+        font-size: 0.65rem;
+        color: var(--muted);
+        letter-spacing: 0.1em;
+        margin-bottom: 0.5rem;
+      }
+
+      .project-name {
+        font-family: var(--sans);
+        font-weight: 700;
+        font-size: 1.05rem;
+        letter-spacing: -0.02em;
+        line-height: 1.25;
+        margin-bottom: 0.85rem;
+      }
+
+      .project-desc {
+        font-size: 0.78rem;
+        color: var(--muted);
+        line-height: 1.8;
+        flex: 1;
+        margin-bottom: 1.5rem;
+      }
+
+      .project-stack {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.35rem;
+      }
+
+      .stack-badge {
+        padding: 0.25rem 0.6rem;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 2px;
+        font-size: 0.65rem;
+        color: var(--muted);
+        letter-spacing: 0.04em;
+      }
+
+      /* ─── FOOTER ─── */
+      footer {
+        position: relative;
+        z-index: 1;
+        border-top: 1px solid var(--border);
+        padding: 2rem 2.5rem;
+      }
+      .footer-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: var(--muted);
+        font-size: 0.72rem;
+      }
+      .footer-sig {
+        color: var(--accent);
+        font-weight: 600;
+      }
+
+      @media (max-width: 700px) {
+        nav {
+          padding: 1rem 1.25rem;
+        }
+        .nav-links {
+          gap: 1.25rem;
+        }
+        .page-header {
+          padding: 7rem 1.25rem 3rem;
+        }
+        .filter-bar {
+          padding: 0 1.25rem 2rem;
+        }
+        .projects-wrap {
+          padding: 0 1.25rem 4rem;
+        }
+        footer {
+          padding: 1.5rem 1.25rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav>
+      <a href="index.html" class="nav-logo">SL/</a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="projects.html" class="active">Projects</a>
+        <a href="vision.html">Vision</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </nav>
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+      <a href="index.html" class="back-link">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+        >
+          <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+        Back to home
+      </a>
+      <div class="section-label">// Portfolio</div>
+      <h1>What I've Built</h1>
+      <p class="sub">
+        Real projects — each one a hands-on exploration of infrastructure,
+        containers, CI/CD, and cloud architecture.
+      </p>
+    </div>
+
+    <!-- FILTER BAR -->
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="onprem">On-Prem</button>
+      <button class="filter-btn" data-filter="cloud">Cloud</button>
+      <button class="filter-btn" data-filter="cicd">CI/CD</button>
+      <button class="filter-btn" data-filter="container">
+        Containerization
+      </button>
+    </div>
+
+    <!-- PROJECTS GRID -->
+    <div class="projects-wrap">
+      <div class="projects-grid" id="grid">
+        <a
+          class="project-card"
+          data-cat="onprem"
+          href="https://github.com/LynaSovann/devOps-multi-tier-webstack"
+          target="_blank"
+        >
+          <div class="project-head">
+            <span class="project-type type-onprem">
+              <svg viewBox="0 0 8 8" fill="currentColor">
+                <circle cx="4" cy="4" r="4" />
+              </svg>
+              On-Prem
+            </span>
+            <span class="project-arrow"
+              ><svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M7 17L17 7M7 7h10v10" /></svg
+            ></span>
+          </div>
+          <div class="project-num">01</div>
+          <div class="project-name">On-Prem Infra Multi Tier Web Stack</div>
+          <p class="project-desc">
+            A fully automated multi-VM webstack deployed using Vagrant and
+            VirtualBox. Includes PostgreSQL, MinIO, Spring Boot, Next.js, and
+            NGINX with systemd-based service management and private network
+            isolation.
+          </p>
+          <div class="project-stack">
+            <span class="stack-badge">IAC</span>
+            <span class="stack-badge">Vagrant</span>
+            <span class="stack-badge">Linux</span>
+            <span class="stack-badge">Systemd</span>
+            <span class="stack-badge">Multi-VM</span>
+            <span class="stack-badge">VirtualBox</span>
+          </div>
+        </a>
+
+        <a
+          class="project-card"
+          data-cat="cloud"
+          href="https://github.com/LynaSovann/devops-aws-ec2-production-infrastructure"
+          target="_blank"
+        >
+          <div class="project-head">
+            <span class="project-type type-cloud">
+              <svg viewBox="0 0 8 8" fill="currentColor">
+                <circle cx="4" cy="4" r="4" />
+              </svg>
+              Cloud
+            </span>
+            <span class="project-arrow"
+              ><svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M7 17L17 7M7 7h10v10" /></svg
+            ></span>
+          </div>
+          <div class="project-num">02</div>
+          <div class="project-name">AWS EC2 Production Infrastructure</div>
+          <p class="project-desc">
+            A production-style multi-tier cloud infrastructure on AWS EC2.
+            Next.js frontend behind an Application Load Balancer, Spring Boot
+            backend with NGINX reverse proxy, PostgreSQL, and MinIO. Uses
+            private networking, internal DNS, and secure HTTPS domains.
+          </p>
+          <div class="project-stack">
+            <span class="stack-badge">AWS</span>
+            <span class="stack-badge">EC2</span>
+            <span class="stack-badge">ALB</span>
+            <span class="stack-badge">NGINX</span>
+            <span class="stack-badge">Spring Boot</span>
+            <span class="stack-badge">Next.js</span>
+            <span class="stack-badge">PostgreSQL</span>
+            <span class="stack-badge">MinIO</span>
+          </div>
+        </a>
+
+        <a
+          class="project-card"
+          data-cat="cicd"
+          href="https://github.com/LynaSovann/cicd-pipelines/tree/spring-ecs-cicd"
+          target="_blank"
+        >
+          <div class="project-head">
+            <span class="project-type type-cicd">
+              <svg viewBox="0 0 8 8" fill="currentColor">
+                <circle cx="4" cy="4" r="4" />
+              </svg>
+              CI/CD
+            </span>
+            <span class="project-arrow"
+              ><svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M7 17L17 7M7 7h10v10" /></svg
+            ></span>
+          </div>
+          <div class="project-num">03</div>
+          <div class="project-name">Spring Boot ECS CI/CD Pipeline</div>
+          <p class="project-desc">
+            Automated CI/CD pipeline for a Spring Boot application using Docker
+            and GitHub workflows. Builds, scans, and deploys the containerized
+            app to AWS ECS with ECR image storage and scalable container
+            orchestration.
+          </p>
+          <div class="project-stack">
+            <span class="stack-badge">Jenkins</span>
+            <span class="stack-badge">Docker</span>
+            <span class="stack-badge">AWS ECS</span>
+            <span class="stack-badge">ECR</span>
+            <span class="stack-badge">Terraform</span>
+            <span class="stack-badge">GitHub Actions</span>
+          </div>
+        </a>
+
+        <a
+          class="project-card"
+          data-cat="container"
+          href="https://github.com/LynaSovann/containerize-with-docker"
+          target="_blank"
+        >
+          <div class="project-head">
+            <span class="project-type type-container">
+              <svg viewBox="0 0 8 8" fill="currentColor">
+                <circle cx="4" cy="4" r="4" />
+              </svg>
+              Containerization
+            </span>
+            <span class="project-arrow"
+              ><svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M7 17L17 7M7 7h10v10" /></svg
+            ></span>
+          </div>
+          <div class="project-num">04</div>
+          <div class="project-name">Containerize with Docker</div>
+          <p class="project-desc">
+            Hands-on project demonstrating Docker containerization with Docker
+            Compose and image optimization for local and cloud deployments.
+            NGINX used as an API gateway across services.
+          </p>
+          <div class="project-stack">
+            <span class="stack-badge">Docker</span>
+            <span class="stack-badge">Docker Compose</span>
+            <span class="stack-badge">Nginx</span>
+            <span class="stack-badge">API Gateway</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-inner">
+        <span class="footer-sig">Sovann Lyna</span>
+        <span>DevOps Engineer · Phnom Penh · <span id="yr"></span></span>
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById("yr").textContent = new Date().getFullYear();
+
+      const filters = document.querySelectorAll(".filter-btn");
+      const cards = document.querySelectorAll(".project-card");
+
+      filters.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          filters.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          const f = btn.dataset.filter;
+          cards.forEach((card) => {
+            const match = f === "all" || card.dataset.cat === f;
+            card.style.display = match ? "flex" : "none";
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
