@@ -444,12 +444,13 @@
           </div>
           <div class="project-num">01</div>
           <div class="project-name">On-Prem Infra Multi Tier Web Stack</div>
-          <p class="project-desc">
-            A fully automated multi-VM webstack deployed using Vagrant and
-            VirtualBox. Includes PostgreSQL, MinIO, Spring Boot, Next.js, and
-            NGINX with systemd-based service management and private network
-            isolation.
-          </p>
+          <ul class="project-desc">
+            <li>Automated multi-VM setup (Vagrant)</li>
+            <li>Service deployment: DB, storage, backend, frontend</li>
+            <li>NGINX reverse proxy + internal networking</li>
+            <li>systemd service management</li>
+            <li>DevOps: automation, orchestration, environment isolation</li>
+          </ul>
           <div class="project-stack">
             <span class="stack-badge">IAC</span>
             <span class="stack-badge">Vagrant</span>
@@ -557,28 +558,193 @@
               </svg>
               Containerization
             </span>
-            <span class="project-arrow"
-              ><svg
+            <span class="project-arrow">
+              <svg
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 stroke-width="2"
               >
-                <path d="M7 17L17 7M7 7h10v10" /></svg
-            ></span>
+                <path d="M7 17L17 7M7 7h10v10" />
+              </svg>
+            </span>
           </div>
+
           <div class="project-num">04</div>
-          <div class="project-name">Containerize with Docker</div>
-          <p class="project-desc">
-            Hands-on project demonstrating Docker containerization with Docker
-            Compose and image optimization for local and cloud deployments.
-            NGINX used as an API gateway across services.
-          </p>
+
+          <div class="project-name">
+            Application Containerization with Docker
+          </div>
+
+          <ul class="project-desc">
+            <li>Containerized application using Docker</li>
+            <li>Created optimized Dockerfile for reproducible builds</li>
+            <li>Built and ran containers for local development</li>
+            <li>Configured multi-service setup (Docker Compose)</li>
+            <li>
+              Applied DevOps: portability, consistency, environment isolation
+            </li>
+          </ul>
+
+          <div class="project-stack">
+            <span class="stack-badge">Docker</span>
+            <span class="stack-badge">Dockerfile</span>
+            <span class="stack-badge">Docker Compose</span>
+            <span class="stack-badge">Containerization</span>
+            <span class="stack-badge">DevOps</span>
+          </div>
+        </a>
+
+        <a
+          class="project-card"
+          data-cat="container"
+          href="https://github.com/LynaSovann/containerize-with-docker/tree/containerized-fullstack-app"
+          target="_blank"
+        >
+          <div class="project-head">
+            <span class="project-type type-container">
+              <svg viewBox="0 0 8 8" fill="currentColor">
+                <circle cx="4" cy="4" r="4" />
+              </svg>
+              Containerization
+            </span>
+            <span class="project-arrow">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M7 17L17 7M7 7h10v10" />
+              </svg>
+            </span>
+          </div>
+
+          <div class="project-num">05</div>
+
+          <div class="project-name">
+            Full-Stack Containerization with Docker
+          </div>
+
+          <ul class="project-desc">
+            <li>Containerized full-stack app (frontend, backend, database)</li>
+            <li>Created separate Dockerfiles for each service</li>
+            <li>Orchestrated multi-container setup using Docker Compose</li>
+            <li>Configured service networking and environment variables</li>
+            <li>
+              Applied DevOps: modular architecture, consistency, portability
+            </li>
+          </ul>
+
           <div class="project-stack">
             <span class="stack-badge">Docker</span>
             <span class="stack-badge">Docker Compose</span>
-            <span class="stack-badge">Nginx</span>
-            <span class="stack-badge">API Gateway</span>
+            <span class="stack-badge">Containerization</span>
+            <span class="stack-badge">Full-Stack</span>
+            <span class="stack-badge">Networking</span>
+            <span class="stack-badge">DevOps</span>
+          </div>
+        </a>
+
+        <a
+          class="project-card"
+          data-cat="cloud"
+          href="https://github.com/LynaSovann/terraform-aws-scalable-portfolio-infra"
+          target="_blank"
+        >
+          <div class="project-head">
+            <span class="project-type type-cloud">
+              <svg viewBox="0 0 8 8" fill="currentColor">
+                <circle cx="4" cy="4" r="4" />
+              </svg>
+              Cloud
+            </span>
+            <span class="project-arrow">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M7 17L17 7M7 7h10v10" />
+              </svg>
+            </span>
+          </div>
+
+          <div class="project-num">05</div>
+
+          <div class="project-name">Scalable AWS Portfolio Infrastructure</div>
+
+          <ul class="project-desc">
+            <li>Provisioned AWS infrastructure using Terraform (IaC)</li>
+            <li>
+              Designed scalable architecture with VPC, subnets, and routing
+            </li>
+            <li>Deployed compute resources (EC2) for application hosting</li>
+            <li>Configured networking, security groups, and access control</li>
+            <li>
+              Applied DevOps: automation, scalability, and reproducible infra
+            </li>
+          </ul>
+
+          <div class="project-stack">
+            <span class="stack-badge">Terraform</span>
+            <span class="stack-badge">AWS</span>
+            <span class="stack-badge">EC2</span>
+            <span class="stack-badge">VPC</span>
+            <span class="stack-badge">IaC</span>
+            <span class="stack-badge">Cloud</span>
+          </div>
+        </a>
+
+        <a
+          class="project-card"
+          data-cat="cloud"
+          href="https://github.com/LynaSovann/deployment-app-in-kubernetes/tree/deploy-app"
+          target="_blank"
+        >
+          <div class="project-head">
+            <span class="project-type type-cloud">
+              <svg viewBox="0 0 8 8" fill="currentColor">
+                <circle cx="4" cy="4" r="4" />
+              </svg>
+              Cloud
+            </span>
+            <span class="project-arrow">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M7 17L17 7M7 7h10v10" />
+              </svg>
+            </span>
+          </div>
+
+          <div class="project-num">06</div>
+
+          <div class="project-name">Kubernetes Application Deployment</div>
+
+          <ul class="project-desc">
+            <li>
+              Containerized application and deployed to Kubernetes cluster
+            </li>
+            <li>Defined resources using YAML (Deployment, Service, Ingress)</li>
+            <li>
+              Exposed application via Ingress and internal service routing
+            </li>
+            <li>
+              Applied DevOps: declarative config, orchestration, scalability
+            </li>
+          </ul>
+
+          <div class="project-stack">
+            <span class="stack-badge">Kubernetes</span>
+            <span class="stack-badge">Docker</span>
+            <span class="stack-badge">YAML</span>
+            <span class="stack-badge">Ingress</span>
+            <span class="stack-badge">Cloud-Native</span>
           </div>
         </a>
       </div>
